@@ -1,0 +1,154 @@
+{% extends "ATOM/CV/BLOG/blog_base.html" %}
+{% block headAppend %}
+<!--<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<style>
+    p{
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+</style>
+    <link rel="stylesheet" href="/static/highlight/styles/atelier-sulphurpool-dark.css">
+    <script src="/static/highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+{% endblock %}
+{% block title %}LS{% endblock %}
+{% block blogTitle %}最小二乘{% endblock %}
+{% block blogDescription %}用线性代数的角度解释最小二乘{% endblock %}
+{% block content %}
+    <!--$$\alpha  \beta { \alpha +1 \over \beta +1} $$-->
+    <blockquote><p>
+        &nbsp;&nbsp;最小二乘法（又称最小平方法）是一种数学优化技术。它通过最小化误差的平方和寻找数据的最佳函数匹配。
+        利用最小二乘法可以简便地求得未知的数据。这篇文章不同于以往的统计学，使用线性代数的角度解释最小二乘。
+    </p></blockquote>
+    <hr>
+    <p><strong>有方程 A<var>x</var> = <var>b</var>;  C(A) = (A的列空间) </strong></p>
+    <table class="table table-condensed">
+    <thead id="harris_table">
+      <tr>
+        <th>b属于A的列空间</th>
+        <th>b不属于A的列空间</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="glyphicon glyphicon-ok" aria-hidden="true">有解</span></td>
+        <td><span class="glyphicon glyphicon-remove" aria-hidden="true">无解 解决方法:用最小二乘求'最优解'</span></td>
+      </tr>
+    </tbody>
+    </table>
+    <hr>
+    <P>
+        <br>
+        在b不属于C(A)时,方程无解.这时候就需要用到最小二乘来找到最优解.
+        <br>
+        找到b在C(A)中最近似的投影$\hat b$,重列方程A$\hat x$ = $\hat b$,$\hat x$就是方程的最优解.
+        <br>
+    </P>
+    <img class="img-responsive" src="/static/img/CV_BLOG/LS00.PNG" >
+    <strong><p id="img-1" class="text-center mNavTag">图-1:b在C(A)中的投影</p></strong>
+    <p>
+        如图-1所示,$\hat b$是b在C(A)中的投影, e是b与$\hat b$之间的误差,为:e=b-$\hat b$.
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;投影为:$\hat b$ = $\hat x_1$ $\alpha_1$ + $\hat x_2$ $\alpha_2$ = $A$$\hat x$  (基向量的组合)
+        <br>因为是垂直投影,e正交于整个平面.所以:
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;$\alpha_1^T$(b-$A$$\hat x$) = 0 &nbsp;&nbsp;$\alpha_2^T$(b-$A$$\hat x$) = 0  $\Rightarrow$
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;$A^T$(b-$A$$\hat x$) = 0 (因为正交,所以等于0) $\Rightarrow$
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;$A^T$$A$$\hat x$ = $A^T$b $\Rightarrow$
+        <table class="table table-hover table-bordered">
+        <!--<thead>-->
+        <!--<tr>-->
+            <!--<th>b属于A的列空间</th>-->
+            <!--<th>b不属于A的列空间</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <tbody>
+            <tr>
+                <td><span >投影矩阵</span></td>
+                <td><span >$P_{matrix}$ = ${(A^TA)}^{-1}A^T$</span></td>
+                <td><span >投影矩阵将b投影到C(A),成为$\hat b$ </span></td>
+            </tr>
+            <tr>
+                <td><span >投影</span></td>
+                <td><span >$\hat b$ = $ A\hat x$ = $A{(A^TA)}^{-1}A^Tb$ </span></td>
+                <td><span >经过投影的$\hat b$ , $\hat b$ = $P_{matrix}b$ </span></td>
+            </tr>
+            <tr>    <!-- 一行-->
+                <td><span >最优解</span></td>
+                <td><span >$\hat x$ = ${(A^TA)}^{-1}A^Tb $</span></td>
+            </tr>
+
+        </tbody>
+        </table>
+    </p>
+    <hr>
+    <h4>直线拟合</h4>
+    <img class="img-responsive" src="/static/img/CV_BLOG/LS01.PNG" >
+    <strong><p id="img-2" class="text-center">图-1:直线拟合</p></strong>
+    <p>
+        <br>假设有3个点,需要拟合出一条直线:
+        <br>$p_1(2,2),p_2(4,4),p_3(6,5).$ 根据斜截式,可以列出三个方程
+        $$ \left \{
+        \begin{array}{c}
+        c+2d=2 \\
+        c+4d=4 \\
+        c+6d=5
+        \end{array}
+        \right .$$
+        <br>方程组有3个,未知数只有两个有奇异性,所以使用最小二乘法来拟合;
+         $$ A = \begin{bmatrix}
+                1 \qquad 2\\
+                1 \qquad 4\\
+                1 \qquad 6
+                \end{bmatrix}\qquad b=\begin{bmatrix}
+                                        2 \\
+                                        4 \\
+                                        5
+                                        \end{bmatrix}$$
+
+    </p>
+
+    <Pre id="code-1" class="mNavTag" reTagName="最小二乘code">
+        <span>最小二乘python实现</span>
+    <code>
+        #coding=utf-8
+        #Version:python3.6.0
+        #Tool:Pycharm 2017.3.2
+        import matplotlib.pyplot as plt
+        import numpy as np
+        #三个点的坐标
+        x = [2, 4, 6]
+        y = [2, 4, 5]
+        plt.xlim(0, 7)  #坐标轴长度设置
+        plt.ylim(0, 7)
+        plt.scatter(x,y)#散点
+        #   c+xd=y
+        #   c+2d=2
+        #   c+4d=4
+        #   c+6d=5
+        A = np.matrix([[1,x[0]],
+                       [1,x[1]],
+                       [1,x[2]]])
+
+        b = np.array([y[0],y[1],y[2]])
+        #求出直线拟合的最优解
+        x_ = np.dot(np.dot(np.dot(A.T,A).I,A.T),b)
+        c = x_[0,0]
+        d = x_[0,1]
+        #生成直线
+        dx = np.arange(1,10)
+        dy = c+d*dx
+        plt.plot(dx,dy) #画出直线
+        plt.xlabel('x')
+        plt.ylabel('y')
+        plt.title('LS')
+        plt.show()
+    </code>
+    </Pre>
+
+{% endblock %}
+{% block bodyAppend %}
+<script>
+    //代码块显示行号
+$("code").each(function(){
+  $(this).html("<ol><li>" + $(this).html().replace(/\n/g,"\n</li><li>") +"\n</li></ol>");
+});
+</script>
+{% endblock %}

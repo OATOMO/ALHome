@@ -1,0 +1,79 @@
+html, body {    /*整页面背景*/
+            margin: 0;
+            padding: 0;
+            background: url('../img/home-bg3.png');
+            repeat: no-repeat;
+            background-attachment:fixed;
+            /*filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/home-bg2.jpg', sizingMethod='scale');*/
+            /*-ms-filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/home-bg2.jpg', sizingMethod='scale');*/
+            background-size: cover;
+             -moz-background-size: cover;
+             -webkit-background-size: cover;
+        }
+
+.bg_head_class{
+    background: burlywood;
+    /*border:2px solid #ffffff;*/
+    /*opacity:0.9*/
+}
+
+.bg_head_class .head_menu_left{
+     width: 70px;
+     height: 50px;
+     /*display: inline-block;*/
+     /*border:1px solid #ffffff;*/
+     float: left;
+     text-align:center;
+     line-height:50px;
+}
+
+.bg_head_class .head_menu_right{
+     width: 100px;
+     height: 50px;
+     /*display: inline-block;*/
+     border:1px solid #ffffff;
+     float: right;
+     text-align:center;
+     line-height:50px;
+    -moz-border-radius: 15px;      /* Gecko browsers 圆角*/
+    -webkit-border-radius: 15px;   /* Webkit browsers 圆角*/
+    border-radius:15px;            /* W3C syntax 圆角*/
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: default;               /*禁止鼠标变成I形*/
+    color: #0f0f0f;
+    background-color: burlywood;
+}
+
+.bg_head_class .head_menu_right:hover{
+    background-color: #ff83e5;
+}
+
+.bg_body_class{
+    /*border:1px solid #ffffff;*/
+    width: 70%;
+    height: 500px;
+    margin: 100px auto;
+}
+
+.button_describe{
+    /*按钮底部的描述字*/
+    color: mediumslateblue;
+    font-style:oblique;
+    font-size: 18px;
+}
+
+.button_size{
+    display: inline-block;
+    width: 200px;
+    height: 300px;
+    /*position:absolute;*/
+}
+
+.userInfo_right{
+    margin-right: 20px;
+    float: right;
+    text-align:center;
+    line-height:50px;
+}
+

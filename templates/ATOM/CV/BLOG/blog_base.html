@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="/static/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/BLOG/blog.css" rel="stylesheet">
+    <!--<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+    <script type="text/javascript" src="/static/MathJax-2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <script src="/static/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="/static/assets/js/ie-emulation-modes-warning.js"></script>
+    {% block headAppend %}{% endblock %}
+    <style>
+        .eyeCount_c{
+            float: left;
+            margin-right: 10px;
+            font-family: "Droid Serif", "DejaVu Serif", "STIX", serif;
+        }
+    </style>
+</head>
+<body>
+{% include 'ATOM/include/navbar_button_I.html' %}
+<div class="container">
+      <div class="blog-header">
+        <h1 class="blog-title">{% block blogTitle %}{% endblock %}</h1>
+        <p class="lead blog-description">{% block blogDescription %}{% endblock %}</p>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+            <div><!--点赞收藏-->
+                <div class="eyeCount_c" data-toggle="tooltip" data-placement="top" title="预览次数">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                    <span id="eyeCount_i" >0</span>
+                </div>
+                <div id="heartCount_box" class="eyeCount_c" data-toggle="tooltip" data-placement="top" title="点赞" onclick="clickAddHeart()">
+                    <i id="heartCount_ui_off" class="fa fa-heart-o "  aria-hidden="true"></i>
+                    <i id="heartCount_ui_on" class="fa fa-heart hidden" style="color: #AA0000;" aria-hidden="true"></i>
+                    <span  id="heartCount_i" >0</span>
+                </div>
+                <div id="starCount_box" class="eyeCount_c" data-toggle="tooltip" data-placement="top" title="收藏" onclick="clickAddStar()">
+                    <i id="starCount_ui_off" class="fa fa-star-o" aria-hidden="true"></i>
+                    <i id="starCount_ui_on" class="fa fa-star hidden" style="color: #eea236;" aria-hidden="true"></i>
+                    <span  id="starCount_i" >0</span>
+                </div>
+            </div><div style="clear:both;"></div>
+        {% block content %}{% endblock %}
+
+            <!--翻页-->
+          <!--<nav>-->
+            <!--<ul class="pager">-->
+              <!--<li><a href="#">Previous</a></li>-->
+              <!--<li><a href="#">Next</a></li>-->
+            <!--</ul>-->
+          <!--</nav>-->
+
+        </div><!-- /.blog-main -->
+
+        <div  class="col-sm-3 col-sm-offset-1 blog-sidebar" > <!--侧面样式 -->
+
+          <!--<div class="sidebar-module sidebar-module-inset">-->
+            <!--<h4>About</h4>-->
+            <!--<p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>-->
+          <!--</div>-->
+
+          <div class="sidebar-module">
+            <h4>目录</h4>
+            <ol id="catalog_list" class="list-unstyled">
+              <!--<li><a href="#">March 2014</a></li>-->
+
+            </ol>
+          </div>
+
+          <!--<div class="sidebar-module">  &lt;!&ndash; 跳转到别处 比如github&ndash;&gt;-->
+            <!--<h4>Elsewhere</h4>-->
+            <!--<ol class="list-unstyled">-->
+              <!--<li><a href="#">GitHub</a></li>-->
+              <!--<li><a href="#">Twitter</a></li>-->
+              <!--<li><a href="#">Facebook</a></li>-->
+            <!--</ol>-->
+          <!--</div> &lt;!&ndash; 跳转到别处end&ndash;&gt;-->
+
+        </div><!-- /.blog-sidebar -->
+
+      </div><!-- /.row -->
+
+    </div><!-- /.container -->
+
+    <footer class="blog-footer">    <!--页脚-->
+      <p>The source code in <a target="_blank" href="https://github.com/OATOMO">github-OATOMO</a> .</p>
+      <p>
+        <a href="#">Back to top</a>
+      </p>
+    </footer>   <!--页脚end-->
+
+
+
+
+
+<script src="/static/assets/js/ie10-viewport-bug-workaround.js"></script>
+{% include 'ATOM/include/navbar_js_I.html' %}
+<script>
+
+/*
+    function : generateCatalog()
+    @函数功能:为模板自动创建侧面导航栏内容
+    @class中加入mNavTag可自动根据标签text值创建导航
+    @增加reTagName属性可自定义导航内容 如(reTagName='泰勒展开')
+*/
+    function generateCatalog() {
+        // var idList = $(".mNavTag").attr("id");
+        // console.log(idList.length);
+        // console.log(idList);
+        // console.log("???");
+        $(".mNavTag").each(function () {
+            var id_str = this.id;
+            var des_str = '.';
+            if ($(this).attr("reTagName") != undefined) {
+                des_str += $(this).attr("reTagName");
+            }
+            else{
+                des_str += $(this).text();
+            }
+            var html_str = "<li><a href='#" +id_str+ "'>" + des_str + "</a></li>";
+
+            console.log(html_str);
+            $("#catalog_list").append(html_str);
+        })
+    }
+    generateCatalog();
+    
+    //bootstrap效果
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+    //获取页面点赞,收藏次数
+    function getEyeCount() {
+
+        $.ajax({
+            url: "/getEyeCount/",
+            type: "POST",
+            data: {
+                what: "getEyeCount",
+                blogUrl:window.location.pathname,
+                csrfmiddlewaretoken:$("[name='csrfmiddlewaretoken']").val()
+            },
+            success: function (data){
+                var obj =  $.parseJSON(data);
+                if(obj['result'] == 'OK'){
+                    $("#eyeCount_i").text(obj['eyeCount']);
+                    $("#heartCount_i").text(obj['heartCount']);
+                    $("#starCount_i").text(obj['starCount']);
+                    if(obj['starStatic']){
+                        $("#starCount_ui_on").removeClass('hidden');
+                        $("#starCount_ui_off").addClass('hidden');
+                    }
+                }
+            }
+        })
+    }
+    getEyeCount();
+
+    function clickAddHeart(){
+        $.ajax({
+            url: "/getEyeCount/",
+            type: "POST",
+            data: {
+                what: "getAddHeart",
+                blogUrl:window.location.pathname,
+                csrfmiddlewaretoken:$("[name='csrfmiddlewaretoken']").val()
+            },
+            success: function (data){
+                if(data == 'OK'){
+                    var cNumber =  Number($("#heartCount_i").text());
+                    $("#heartCount_i").text(cNumber+1);
+                    $("#heartCount_ui_on").removeClass('hidden');
+                    $("#heartCount_ui_off").addClass('hidden');
+                    $("#heartCount_box").removeAttr('onclick');//去掉标签中的onclick事件
+
+                }
+            }
+        })
+    }
+    function clickAddStar() {
+        if(judgeOnline()) {
+            $.ajax({
+                url: "/getEyeCount/",
+                type: "POST",
+                data: {
+                    what: "getAddStar",
+                    blogUrl: window.location.pathname,
+                    csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
+                },
+                success: function (data) {
+                    if(data == 'OK'){//没收藏 加一
+                        var cNumber =  Number($("#starCount_i").text());
+                        $("#starCount_i").text(cNumber+1);
+                        $("#starCount_ui_on").removeClass('hidden');
+                        $("#starCount_ui_off").addClass('hidden');
+                    }else if(data == 'hasStat'){      //已收藏 减1
+                        var cNumber =  Number($("#starCount_i").text());
+                        $("#starCount_i").text(cNumber-1);
+                        $("#starCount_ui_on").addClass('hidden');
+                        $("#starCount_ui_off").removeClass('hidden');
+                    }
+
+                }
+            })
+        }
+        else{
+            alert("请先登录");
+        }
+    }
+    
+    function judgeOnline() {
+        if($("#login_userInfo").hasClass('hidden')){
+        //不在线
+            return false;
+        }else{
+        //在线
+            return true;
+        }
+    }
+</script>
+{% include 'ATOM/include/mathjax_pus.html' %}
+{% block bodyAppend %}{% endblock %}
+</body>
+</html>

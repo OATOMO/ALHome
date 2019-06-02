@@ -1,0 +1,65 @@
+1.查找元素
+    -选择
+        -id
+            $.("#id1");     //以ID号选择一个jQuery对象
+            $.("#id1")[0];  //jQuery对象转换为DOM对象
+            d = document.getElementById("id1");
+            $(d)            //DOM对象转换为jQuery对象
+        -class
+            <div class="c1"></div>
+            $.(".c1")
+        -标签
+            <a href="www.baidu.com"></a>
+            $('a')
+        -$('a,.c1,#id1')    //拿到全部的a标签,成c1类,id1 ID号
+
+        -[] //基于自定义属性来查找
+            <a TOM='123'></a>
+            <a TOM='456'></a>
+            $('[TOM]')          //具有TOM属性的标签
+            $('[TOM="456"]')    //TOM属性为456的标签
+
+
+        -层级
+            $('#id1 a')     //子子孙孙
+            $('#id1>a')     //只找子标签
+    -筛选
+        $(this).next()      //下一个
+        $(this).prev()      //上一个
+        $(this).parent()    //父级标签
+        $(this).children()  //子标签
+        $(this).siblings()  //兄弟标签
+        $(this).find('.c1')  &  $(this).find('#i1')
+        $(this).first()
+        $(this).last()
+        $(this).hasClass()
+
+        $(':checkbox').each(function () {
+        })  //循环执行函数
+    -操作
+            $('.i1').text()     //获取标签内容
+            $('.i1').html()     //获取html内容
+            $('.i1').html("<p>asdasd</p>")     //改变html内容
+            $('.i1').val()      //获取value属性
+            $('.i1').val("xxx") //设置value属性
+        -样式操作
+            $('.i1').addClass('hide')
+            $('.i1').removeClass('hide')
+            $('.i1').toggleClass('hide') //有这个class就去除,没有就加上
+        -属性操作
+            ----专门为自定义属性
+            $('.i1').attr('type')       //获取这个属性的值
+            $('.i1').attr('type','button')  //设置或添加属性的值
+            $('.i1').removeAttr('type')     //删除属性
+            ----专门为checkbox,radio
+            $('.i1').prop('checked',true);
+        -文档处理
+            $('.i1').append()   //追加到内部最后
+            $('.i1').prepend()   //追加到内部最上面
+            $('.i1').after()   //追加到最外面下面
+            $('.i1').before()   //追加到最外面上面
+            $('.i1').eq(index).remove()   //删除标签
+            $('.i1').eq(index).empty()   //清除标签内容
+
+
+

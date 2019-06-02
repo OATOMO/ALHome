@@ -1,0 +1,180 @@
+{% extends "ATOM/CV/BLOG/blog_base.html" %}
+{% block headAppend %}
+<!--<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<style>
+    p{
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    ul{
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+</style>
+    <link rel="stylesheet" href="/static/highlight/styles/atelier-sulphurpool-dark.css">
+    <script src="/static/highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+{% endblock %}
+{% block title %}F Matrix{% endblock %}
+{% block blogTitle %}基础矩阵与本征矩阵{% endblock %}
+{% block blogDescription %}基础矩阵与本征矩阵性质与求解方式{% endblock %}
+{% block content %}
+    <h1>一.基本矩阵F</h1>
+    <blockquote><p>
+        &nbsp;&nbsp;基本矩阵F(Fundamental Matrix)是对极几何的代数表示.它独立于场景结构,只依赖于摄像机内部参数和姿态.
+        如果3维空间中的点$X$在第一个视图中被成像为$x_1$,在第二个视图中成像为$x_2$.则这两个点满足${x_2}^TF{x}_1 = 0$.
+    </p></blockquote>
+    <img class="img-responsive" src="/static/img/CV_BLOG/FMatrix00.PNG" >
+    $$
+        {x_2}^TF{x}_1 =
+        {\begin{bmatrix}
+        u_2\\
+        v_2\\
+        1
+        \end{bmatrix}}^T F \begin{bmatrix}
+                        u_1\\
+                        v_1\\
+                        1
+                        \end{bmatrix} = 0
+    $$
+    <h3>基础矩阵的性质</h3>
+    <blockquote>
+        <p >
+            <ul>
+              <li>3x3的矩阵,秩为2</li>
+              <li>具有7个自由度</li>
+              <li>奇异值为${[\sigma_1,\sigma_2,0]}^T$</li>
+              <li>级线约束:$l_1 = F^Tx_2 , l_2 = Fx_1 , {x_2}^{T}Fx_1 = 0$</li>
+            </ul>
+        </p>
+    </blockquote>
+    <h3>基础矩阵求解方法</h3>
+    <blockquote>
+        <p >
+        <ul>
+            <li>直接线性变换法
+                <ul>
+                  <li>8点法</li>
+                  <li><a target="_blank" href="/ATOM/CV/blog/3/">最小二乘法</a></li>
+                </ul>
+            </li>
+            <li>基于RANSAC的鲁棒方法</li>
+        </ul>
+        </p>
+    </blockquote>
+    <h3>*** 直接线性变换法 ***</h3>
+    <blockquote>
+    <p>
+        两个视图中每对匹配点$x_1 = {[u_1,v_1,1]}^T , x_2 = {[u_2,v_2,2]}^T$,都有对极约束${x_2}^{T}Fx_1 = 0$.
+        可以列出下面的方程
+        $$ \begin{equation}\begin{split}
+            \begin{bmatrix} u_1 \quad v_1 \quad 1 \end{bmatrix}
+                \begin{bmatrix}
+                F_{11} \quad F_{12} \quad F_{13} \\
+                F_{21} \quad F_{22} \quad F_{23} \\
+                F_{31} \quad F_{32} \quad F_{33}
+                \end{bmatrix}
+                    \begin{bmatrix}
+                    u_2 \\
+                    v_2 \\
+                    1
+                    \end{bmatrix} = 0 \\
+            [(u_{1}F_{11}+v_{1}F_{21}+F_{31}), (u_{1}F_{12}+v_{1}F_{22}+F_{32}), (u_{1}F_{13}+v_{1}F_{23}+F_{33})]
+            \begin{bmatrix}
+                u_2 \\
+                v_2 \\
+                1
+            \end{bmatrix} = 0 \\
+            [u_{1}u_{2}F_{11}+u_{2}v_{1}F_{21}+u_{2}F_{31}+u_{1}V_{2}F_{12}+v_{1}v_{2}F_{22}+v_{2}F_{32}+
+            u_{1}F_{13}+v_{1}F_{23}+F_{33}] = 0 \\
+                 \end{split}\end{equation}
+        <br>
+        $$
+            令$f = {[F_{11},F_{12},F_{13},F_{21},F_{22},F_{23},F_{31},F_{32},F_{33}]}^T$ 则有:
+        $$
+        <br>
+            [u_{1}u_{2},u_{1}v_{2},u_1,u_{2}v_{1},v_{1}v_{2},v_1,u_2,v_2,1]f = 0
+        \Leftarrow 每一对匹配点都提供一组约束
+        $$
+        <br><strong>当有n对匹配点时 :</strong>
+        $$
+            A =
+        \begin{bmatrix}
+            {u_{1}}^{(1)}{u_{2}}^{(1)}&\quad{u_{1}}^{(1)}{v_{2}}^{(1)}&\quad{u_1}^{(1)}&\quad
+            {u_{2}}^{(1)}{v_{1}}^{(1)}&\quad {v_{1}}^{(1)}{v_{2}}^{(1)}&\quad {v_1}^{(1)}&\quad {u_2}^{(2)}&\quad {v_2}^{(1)}&\quad 1 \\
+            {u_{1}}^{(2)}{u_{2}}^{(2)}&\quad{u_{1}}^{(2)}{v_{2}}^{(2)}&\quad{u_1}^{(2)}&\quad
+            {u_{2}}^{(2)}{v_{1}}^{(2)}&\quad {v_{1}}^{(2)}{v_{2}}^{(2)}&\quad {v_1}^{(2)}&\quad {u_2}^{(2)}&\quad {v_2}^{(2)}&\quad 1 \\
+            \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+            {u_{1}}^{(n)}{u_{2}}^{(n)}&\quad{u_{1}}^{(n)}{v_{2}}^{(n)}&\quad{u_1}^{(n)}&\quad
+            {u_{2}}^{(n)}{v_{1}}^{(n)}&\quad {v_{1}}^{(n)}{v_{2}}^{(n)}&\quad {v_1}^{(n)}&\quad {u_2}^{(n)}&\quad {v_2}^{(n)}&\quad 1
+        \end{bmatrix}  \\
+            Af = 0
+        $$
+        <ul>
+            <li>要保证有唯一解至少需要8对匹配点</li>
+            <li>n = 8 时，若A 非奇异，则有唯一解，称为8点法</li>
+            <li>n ≥ 8 时，可用<a target="_blank" href="/ATOM/CV/blog/3/">最小二乘法求解</a></li>
+        </ul>
+    </p>
+    </blockquote>
+    <!-- E -->
+    <h1>二.本征矩阵E</h1>
+    <blockquote><p>
+        &nbsp;&nbsp;本质矩阵是归一化图像坐标下的基本矩阵的特殊情况。基本矩阵把要求标定相机这样一个（非本质的）的基本假设去掉了.
+        (The essential matrix is the specialization of the fundamental matrix to the case of normalized image coordinates ).
+        <br>如果在空间中有一点P.
+        <br>在摄像机1中的像点在摄像机坐标系中表示为$P_{c1}=
+            \begin{bmatrix}
+                x_{c1} \\
+                y_{c1} \\
+                z_{c1}
+            \end{bmatrix}$
+        <br>在摄像机2中的像点在摄像机坐标系中表示为$P_{c2}=
+            \begin{bmatrix}
+                x_{c2} \\
+                y_{c2} \\
+                z_{c2}
+            \end{bmatrix}$
+        <br>(注意,E约束的是空间中的点,F约束的是像素中的点)
+        <br>则有:
+        $$
+            {P_{c2}}^T E P_{c1} =
+            {\begin{bmatrix}
+                x_{c2} \\
+                y_{c2} \\
+                z_{c2}
+            \end{bmatrix}}^T E \begin{bmatrix}
+                x_{c1} \\
+                y_{c1} \\
+                z_{c1}
+            \end{bmatrix} = 0
+        $$
+    </p></blockquote>
+    <h3>本征矩阵E的性质</h3>
+    <blockquote>
+        <p >
+            <ul>
+              <li>3x3的矩阵,秩为2</li>
+              <li>具有5个自由度</li>
+              <li>奇异值为${[\sigma,\sigma,0]}^T$</li>
+            </ul>
+        </p>
+    </blockquote>
+    <h3>求解本征矩阵E</h3>
+    <blockquote>
+        <p>
+            $ \hat E = {K_2}^T F K_1$
+            <br><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+            <br>$ \hat E = Udiag(\sigma_1,\sigma_2,0) {V}^T$  (奇异值约束,重构E)
+            <br><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+            <br>$E = Udiag({\sigma_1 + \sigma_2\over 2} + {\sigma_1 + \sigma_2\over 2},0){V}^T = U\Sigma{V}^T,\Sigma=diag(\sigma,\sigma,0)$
+        </p>
+    </blockquote>
+
+{% endblock %}
+{% block bodyAppend %}
+<script>
+    //代码块显示行号
+$("code").each(function(){
+  $(this).html("<ol><li>" + $(this).html().replace(/\n/g,"\n</li><li>") +"\n</li></ol>");
+});
+</script>
+{% endblock %}

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+
+    <!--Bootstrap core CSS -->
+
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/TOOLS/tools_home.css">
+    {% block headAppend %}{% endblock %}
+<!-- ############################## head start############################################ -->
+    <style>
+        .bg_head_class{
+    background: burlywood;
+    /*border:2px solid #ffffff;*/
+    /*opacity:0.9*/
+}
+
+.bg_head_class .head_menu_left{
+     width: 70px;
+     height: 50px;
+     /*display: inline-block;*/
+     /*border:1px solid #ffffff;*/
+     float: left;
+     text-align:center;
+     line-height:50px;
+}
+
+.bg_head_class .head_menu_right{
+     width: 100px;
+     height: 50px;
+     /*display: inline-block;*/
+     border:1px solid #ffffff;
+     float: right;
+     text-align:center;
+     line-height:50px;
+     -moz-border-radius: 15px;      /* Gecko browsers 圆角*/
+     -webkit-border-radius: 15px;   /* Webkit browsers 圆角*/
+    border-radius:15px;            /* W3C syntax 圆角*/
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: default;               /*禁止鼠标变成I形*/
+    color: #0f0f0f;
+    background-color: burlywood;
+}
+
+.bg_head_class .head_menu_right:hover{
+    background-color: #ff83e5;
+}
+
+.bg_body_class{
+    /*border:1px solid #ffffff;*/
+    width: 70%;
+    height: 500px;
+    margin: 100px auto;
+}
+
+.button_describe{
+    /*按钮底部的描述字*/
+    color: mediumslateblue;
+    font-style:oblique;
+    font-size: 18px;
+}
+
+.button_size{
+    display: inline-block;
+    width: 200px;
+    height: 300px;
+    /*position:absolute;*/
+}
+
+.userInfo_right{
+    margin-right: 20px;
+    float: right;
+    text-align:center;
+    line-height:50px;
+}
+    </style>
+</head>
+<body>
+{% csrf_token %}
+<!--头部div-->
+    <div class="bg_head_class navbar-fixed-top" style="float: right">
+        <!--<div class="head_menu_left">logo</div>-->
+        <!--登录注册按钮-->
+        <div class="head_menu_left">
+            <img src="/static/img/atom_log.png" style="width:50px;height: 50px; ">
+        </div>
+        <div class="head_menu_left">ATOM</div>
+        <div id="log_button">
+            <button class="head_menu_right" data-toggle="modal" data-target="#login_modal">注册</button>
+            <button class="head_menu_right" data-toggle="modal" data-target="#logup_modal">登录</button>
+        </div>
+        <!--用户信息-->
+        <div id="login_userInfo" class="hidden userInfo_right" style="float: right;text-align:center;
+    line-height:50px;margin-right: 20px;">
+            <img id="userHeadIcon" style="margin-right: 5px;width: 50px;height: 50px;display: flex;border-radius: 50%;align-items: center;justify-content: center;overflow: hidden;float: left">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary" id="login_userInfo_userName">userName</button>
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">...</a></li>
+                <li><a href="#">...</a></li>
+                <li><a href="#">...</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#" id="logout_button">注销</a></li>
+            </ul>
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+<!----------------注册模态框start----------- -->
+    <div class="modal fade" id="login_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">注册</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+                <input type="text" id="i_user" placeholder="user" />
+                <span class="glyphicon glyphicon-ok hidden" aria-hidden="true" id="i_user_ok"></span>
+                <div class="alert alert-danger hidden" role="alert" id="i_user_check"></div>
+            </p>
+            <p>
+                <input type="password" id="i_password" placeholder="Password" />
+                <span class="glyphicon glyphicon-ok hidden" aria-hidden="true" id="i_password_ok"></span>
+                <div class="alert alert-danger hidden" role="alert" id="i_password_check"></div>
+            </p>
+            <p>
+                <input type="password" id="i_repassword" placeholder="rePassword" />
+            </p>
+            <p>
+                <div>
+                    男: <input type = "radio" name = "gender" value = "man" />
+                    女: <input type = "radio" name = "gender" value = "woman"/>
+                </div>
+            </p>
+            <p>
+                <input type="email" id="i_email" placeholder="e-mail" />
+                <span class="glyphicon glyphicon-ok hidden" aria-hidden="true" id="i_email_ok"></span>
+                <div class="alert alert-danger hidden" role="alert" id="i_email_check"></div>
+            </p>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary" id="btn_login">注册</button>
+          </div>
+        </div>
+      </div>
+    </div>
+<!----------------注册模态框end----------- -->
+    <!----------------登录模态框start----------- -->
+    <div class="modal fade" id="logup_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel_up">登录</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+                <input type="text" id="i_user_up" placeholder="user" />
+            </p>
+            <p>
+                <input type="password" id="i_password_up" placeholder="Password" />
+                <!--登录错误提示框-->
+                <div class="alert alert-success hidden" role="alert" id="logup_check_ok"></div>
+                <div class="alert alert-danger hidden" role="alert" id="logup_check"></div>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary" id="btn_logup">登录</button>
+          </div>
+        </div>
+      </div>
+    </div>
+<!----------------登录模态框end----------- -->
+<!-- ############################## body start############################################ -->
+    <div id="wrapper">
+        <div class="overlay"></div>
+
+        <!-- Sidebar -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+            <ul class="nav sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                       Bootstrap 3
+                    </a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-fw fa-home"></i> Home</a>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i> 统计 <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li class="dropdown-header">Dropdown heading</li>
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li>
+                  </ul>
+                </li>
+                <li>
+                    <a href="/ATOM/TOOLS/tools_ID/base64"><i class="fa fa-fw fa-folder"></i> base64编码</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-qrcode" aria-hidden="true"></i> 二维码生成</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-fw fa-cog"></i> 正则表达式生成</a>
+                </li>
+
+                <li>
+                    <a href="#"><i class="fa fa-fw fa-file-picture-o" aria-hidden="true"></i> gif制作</a>
+                </li>
+                <!--<li>-->
+                    <!--<a href="#"><i class="fa fa-fw fa-dropbox"></i> Page 5</a>-->
+                <!--</li>-->
+                <li>
+                    <a href="#"><i class="fa fa-fw fa-github" aria-hidden="true"></i> github</a>
+                </li>
+            </ul>
+        </nav>
+
+    <!-- Page Content -->
+        <div id="page-content-wrapper">
+          <!--导航隐藏按钮-->
+          <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+            <span class="hamb-top"></span>
+            <span class="hamb-middle"></span>
+            <span class="hamb-bottom"></span>
+          </button>
+
+
+            <div class="container">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+
+<!-- ########################################################################## -->
+<script src="/static/jquery-3.2.1/jquery-3.2.1.js"></script>
+<script src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<!--自己的JS文件-->
+<script src="/static/m_js/m_login.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    var trigger = $('.hamburger'),
+        overlay = $('.overlay'),
+        isClosed = false;
+    trigger.click(function() {
+        hamburger_cross();
+    });
+    function hamburger_cross() {
+        if (isClosed == true) {
+            overlay.hide();
+            trigger.removeClass('is-open');
+            trigger.addClass('is-closed');
+            isClosed = false;
+        } else {
+            overlay.show();
+            trigger.removeClass('is-closed');
+            trigger.addClass('is-open');
+            isClosed = true;
+        }
+    }
+    $('[data-toggle="offcanvas"]').click(function() {
+        $('#wrapper').toggleClass('toggled');
+    });
+});
+</script>
+{% block script %}{% endblock %}
+</body>
+</html>

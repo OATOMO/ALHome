@@ -1,0 +1,38 @@
+{% extends "ATOM/CV/BLOG/blog_base.html" %}
+{% block title %}Harris{% endblock %}
+{% block blogTitle %}Harris角点检测{% endblock %}
+{% block blogDescription %}Harris角点检测算法介绍{% endblock %}
+{% block content %}
+    <table class="table table-condensed">
+    <thead id="harris_table" class="mNavTag" reTagName="性质">
+      <tr>
+        <th>旋转不变性</th>
+        <th>尺度不变性</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
+        <td><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>解决方法: 尺度归一化LoG算子</td>
+      </tr>
+    </tbody>
+    </table>
+    <blockquote><strong><p>人们通常通过在一个小的窗口区域内观察点的灰度值大小来识别角点，如果往任何方向移动窗口都会引起比较大的灰度变换那么往往这就是我们要找的角点。</p></strong></blockquote>
+    <div><img class="img-responsive" src="/static/img/CV_BLOG/harris00.png"></div>
+    <hr>
+    <blockquote><p>角点检测最原始的想法就是取某个像素的一个邻域窗口,当这个窗口在各个方向上进行小范围移动时,观察窗口内平均的像素灰度值的变化（即,E(u,v),Window-averaged change of intensity）.从上图可知,我们可以将一幅图像大致分为三个区域<strong>（‘flat’，‘edge’，‘corner’）</strong>,这三个区域变化是不一样的.</p></blockquote>
+    <hr>
+    <div><img  class="img-responsive" src="/static/img/CV_BLOG/harris01.png"></div>
+    <hr>
+    <img class="img-responsive" src="/static/img/CV_BLOG/harris02.png" >
+    <strong><p id="ccc" class="text-center mNavTag">泰勒展开</p></strong>
+{% endblock %}
+
+
+
+
+
+
+
+
+

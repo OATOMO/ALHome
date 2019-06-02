@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+    <input type="button" value="全选" onclick="checkAll()"/>
+    <input type="button" value="反选" onclick="reverseAll()"/>
+    <input type="button" value="取消" onclick="canclekAll()"/>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <td>选项</td>
+                <td>IP</td>
+                <td>port</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>1.1.1.1</td>
+                <td>80</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>1.1.1.2</td>
+                <td>90</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"/></td>
+                <td>1.1.1.3</td>
+                <td>100</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script src="../../../../static/jquery-3.2.1/jquery-3.2.1.js"></script>
+    <script>
+        function checkAll() {
+            $(':checkbox').prop('checked',true);
+        }
+
+        function canclekAll() {
+            $(':checkbox').prop('checked',false);
+        }
+
+        function reverseAll() { //反选
+            $(':checkbox').each(function () {
+                //this,代指当前循环的每一个元素
+                //方法1
+                // if(this.checked){
+                //     this.checked=false;
+                // }else {
+                //     this.checked=true;
+                // }
+                //方法2
+                // if($(this).prop('checked')){
+                //     $(this).prop('checked',false);
+                // }
+                // else{
+                //     $(this).prop('checked',true);
+                // }
+                //方法3
+                var v = $(this).prop('checked')?false:true;
+                 $(this).prop('checked',v);
+            })
+        }
+    </script>
+</body>
+</html>

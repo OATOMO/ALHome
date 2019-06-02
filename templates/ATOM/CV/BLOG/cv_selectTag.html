@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>selectTag</title>
+    <link rel="stylesheet" href="/static/mvg/css/cv_home.css" />
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css"/>
+    <style>
+        .mTag{
+            padding:5px;
+            margin-left: 5px;
+            border:1px solid #866ab3;
+            border-radius:50px;
+        }
+    </style>
+</head>
+<body>
+    <!--引入导航栏html-->
+    {% include 'ATOM/include/navbar_button_I.html' %}
+
+    <div class="container">
+    <div class="row">
+        <div class="col-sm-8"><!-- blog list -->
+            <div id="blog_list"><!-- blog列表 -->
+                {% for item in tagInfoList %}
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><a href={{ item.url }}>{{item.title}}</a>
+                        <p class="pull-right">
+                            -Tag
+                            {% for itemTag in item.tag %}
+                                <a class="bg-success mTag" href="/ATOM/blog_tag/{{itemTag}}">{{itemTag}}</a>
+                            {% endfor %}
+                        </p>
+                        </div>
+                        <div class="panel-body"><p><a href={{ item.url }}>{{item.description}}</a></p></div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!--<nav aria-label="Page navigation">&lt;!&ndash;分页&ndash;&gt;-->
+              <!--<ul class="pagination">-->
+                <!--<li id="addPaging_i">-->
+                  <!--<a href="#" aria-label="Previous">-->
+                    <!--<span aria-hidden="true">&laquo;</span>-->
+                  <!--</a>-->
+                    <!--</li>-->
+
+                    <!--&lt;!&ndash;<li><a href="#">1</a></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><a href="#">2</a></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><a href="#">3</a></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><a href="#">4</a></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><a href="#">5</a></li>&ndash;&gt;-->
+
+                    <!--<li id="addPaging_i2">-->
+                  <!--<a href="#" aria-label="Next">-->
+                    <!--<span aria-hidden="true">&raquo;</span>-->
+                  <!--</a>-->
+                <!--</li>-->
+              <!--</ul>-->
+            <!--</nav>&lt;!&ndash;分页 end&ndash;&gt;-->
+        </div><!-- col-sm-8 end-->
+        <div class="col-sm-3"><!-- tag -->
+        </div><!-- col-sm-3 end-->
+    </div><!-- row end-->
+    </div><!-- container end-->
+    <!--引入导航栏脚本-->
+{% include 'ATOM/include/navbar_js_I.html' %}
+
+
+
+</body>
+</html>

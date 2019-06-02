@@ -1,0 +1,85 @@
+{% extends "ATOM/CV/BLOG/blog_base.html" %}
+{% block headAppend %}
+<!--<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<style>
+    p,a{
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+</style>
+    <link rel="stylesheet" href="/static/highlight/styles/atelier-sulphurpool-dark.css">
+    <script src="/static/highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+{% endblock %}
+{% block title %}LS{% endblock %}
+{% block blogTitle %}vultr ss搭建教程{% endblock %}
+<!--{% block blogDescription %}vultr ss搭建教程{% endblock %}-->
+{% block content %}
+    <p>
+        自己搭建SS服务器与VPN相比，最大的优势就是速度快！当然，凡事都是有利弊的。这里做一个简单的对比吧，
+    如果你使用的是VPN服务，对隐私方面还是比较有安全保障的，因为VPN使用的是共享IP，所有流量都通过VPN进行隧道传输，
+    很难被追朔到。相对而言，SS在隐私和安全方面相对差点意思，不过，只要你不干什么擦边违法的事，就不用怕鬼敲门- -好的，
+    咱们回归正题：如何使用VPS搭建SS服务器。接下来，我会以Vultr为例。
+
+    <center>
+        <a href="https://www.vultr.com/" style="" type="button" class="btn btn-info" target="_blank"> > 点击这里进入vultr官网</a>
+    </center>
+    </p>
+<hr>
+    <p>
+        在教程开始之前呢，最好先进行一些简单的网络分析，找到shadowocks服务器的最佳Vultr服务器位置。使用下面的主机名，向每个服务器发送ping命令
+    以检查您所在位置的延迟。请记住关闭任何现有的VPN连接，因为我们要检查ISP和Vultr服务器之间的延迟。
+        <img class="img-responsive" src="/static/img/CV_BLOG/ID5_vultr00.png" >
+        从测试结果来看，东京、新加坡、硅谷、洛杉矶显然是首选。好的，接下来就正式进入此次VPS搭建SS服务器教程。
+    </p>
+<hr>
+    <h4 class="mNavTag" style="color: #8959a8;">第一步、注册Vultr账户并部署</h4>
+    <p>
+        点击下方按钮直接进入Vultr官网，注册账户，按照要求填入邮箱和密码，记住密码第一位要大写！
+    然后点击“Create Account”，接着会有一封验证邮件到你的邮箱。
+        <img class="img-responsive" src="/static/img/CV_BLOG/ID5_vultr01.png" >
+        进入你的注册邮箱，点击按钮确认账号，然后会跳转到Vultr的登陆页面，使用刚才注册的账号密码登陆即可。
+        <img class="img-responsive" src="/static/img/CV_BLOG/ID5_vultr02.png" >
+        接着就开始部署服务器，其实很简单，无非选择机房位置（推荐日本或者新加坡），操作系统<span style="color: #AA0000">（建议选CentOS 6×64 或Ubuntu16.4，一定不能选Ubuntu17.x）</span>
+        ，套餐价格（推荐5美元/月）其他设置都无视，了解下就好。确定配置后，就点下右下角的“Deploy Now”。
+        <img class="img-responsive" src="/static/img/CV_BLOG/ID5_vultr03.png" >
+        然后就到了支付页面，值得一提的是Vultr支持支付宝，这就很方便了。选择支付方式和金额，然后付款即可。
+        <img class="img-responsive" src="/static/img/CV_BLOG/ID5_vultr04.png" >
+        付完款，稍等片刻服务器就会安装运行完毕。点击蓝色齿轮，就能进入服务器的详情页面，VPS的IP和密码之后的教程会用到。所以这一页不要关闭，我们进入下一步！
+        <img class="img-responsive" src="/static/img/CV_BLOG/ID5_vultr05.png" >
+    </p>
+<hr>
+    <h4 class="mNavTag" style="color: #8959a8;">第二步、连接VPS并安装SS</h4>
+    <p>
+        这一步将是本教程的重点，所以一定要按照步骤认真看！首先，下载Putty（一个Telnet、SSH、rlogin、Xshell6、任意一个SSH远程连接工具都行）。
+        <img class="img-responsive" src="/static/img/CV_BLOG/ID5_vultr06.png" >
+        然后在命令窗中输入【root】回车，接着按照要求复制VPS的密码并回车。<span style="color: #AA0000">（粘贴方式为单击鼠标右键，只需要右键单击一次，这里不会显示任何内容，其实是已经输入了）</span>
+        <img class="img-responsive" src="/static/img/CV_BLOG/ID5_vultr07.png" >
+        等到出现“[root@host ~]#”时，复制下面脚本第一条命令并回车：
+        <Pre>
+        <code>wget –no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh</code>
+        </Pre>
+        <img class="img-responsive" src="/static/img/CV_BLOG/ID5_vultr08.png" >
+        看到上图时，咱们接着分别执行第二条和第三条脚本命令：
+        <Pre>
+        <code>
+            chmod +x shadowsocks.sh
+            ./shadowsocks.sh 2>&1 | tee shadowsocks.logs
+        </code>
+        </Pre>
+        稍等片刻之后，按照提示依次输入密码-确认密码-输入端口号-确认端口号，选择加密方式-回车确认。
+        加密方式我们一定要选择【7】，如果你的苹果设备想实现科学上网的话。
+        <img class="img-responsive" src="/static/img/CV_BLOG/ID5_vultr09.png" >
+        接下来可以需几分钟的安装时间，你可以起身上个厕所或喝杯水活动活动。
+        <img class="img-responsive" src="/static/img/CV_BLOG/ID5_vultr10.png" >
+        当你看到上图时，恭喜你！搭建SS服务器成功，请妥善保管以上信息，因为之后你在其他设备科学上网都要用到的！
+    </p>
+<hr>
+    <h4 class="mNavTag" style="color: #8959a8;">第三步、使用Shadowsocks工具连接SS</h4>
+    <p>
+        <ul>
+            <li>pc端建议使用Shadowsocks</li>
+            <li>手机端建议使用FirstWingy</li>
+        </ul>
+        <img class="img-responsive" src="/static/img/CV_BLOG/ID5_vultr11.png" >
+    </p>
+{% endblock %}
