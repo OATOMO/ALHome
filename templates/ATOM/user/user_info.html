@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>userInfo</title>
+    <link rel="stylesheet" href="/static/mvg/css/cv_home.css" />
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css"/>
+    <link href="/static/cropper/cropper.min.css" rel="stylesheet">
+	<link href="/static/sitelogo/sitelogo.css" rel="stylesheet">
+</head>
+<body>
+    <!--引入导航栏html-->
+    {% include 'ATOM/include/navbar_button_I.html' %}
+    <div id="relogin_i" class="jumbotron infoTag hidden container"><!-- 重新登录 -->
+        <h1 style="text-align:center">
+            请先登录账户
+            <span class="glyphicon glyphicon-user" aria-hidden="true" data-toggle="modal" data-target="#logup_modal"></span>
+        </h1>
+    </div>
+    <div id="userInfo_i" class=" infoTag container"><!-- 基本用户信息 与 修改信息-->
+        <div><!--用户名 -->
+            <h1 id="userName_i"></h1>
+        </div>
+        <hr>
+        <div> <!--头像 -->
+            <!--<img id="setUserHeadIcon" style="margin-right: 5px;width: 50px;height: 50px;display: flex;border-radius: 50%;align-items: center;justify-content: center;overflow: hidden;float: left">-->
+            <img alt="Logo" id="setUserHeadIcon"  class="img-circle" style="width: 50px;height: 50px;float: left">
+            <!--<button  id="chHeadIcon_i" style="float: left;margin-top: 12px;margin-left: 10px">更改头像</button>-->
+            <input id="uploadImg" type="file" name="img" style="float:left;margin-top: 12px;margin-left: 10px;"/>
+            <input id="changeHeadIcon" type="button" value="保存" style="float:left;margin-top: 12px;margin-left: 10px;">
+
+        </div><div style="clear:both;"></div>
+        <hr>
+        <div> <!-- 邮箱 info-->
+            邮箱:
+            <input id="userEmail_i" type="email" >
+        </div>
+    </div>
+    <div id="userCollect_i" class="infoTag hidden container"><!-- 用户收藏文章 -->
+
+    </div>
+    <!--引入导航栏脚本-->
+
+
+
+    {% include 'ATOM/include/navbar_js_I.html' %}
+    <script src="/static/cropper/cropper.min.js"></script>
+	<script src="/static/sitelogo/sitelogo.js"></script>
+    <script>
+        //上传头像
+        $("#changeHeadIcon").on("click",function () {
+            // alert(1);
+            var file_obj = document.getElementById('uploadImg').files[0];
+            var fd = new FormData();
+            var userName = $("#userName_i").text();
+            fd.append('userName',userName);
+            fd.append('img',file_obj);
+            fd.append('csrfmiddlewaretoken',$("[name='csrfmiddlewaretoken']").val());
+
+            $.ajax({
+                url: '/changeHeadIcon/',
+                type: 'POST',
+                data: fd,
+                processData:false,// tell jQuery not to process the data
+                contentType:false,// tell jQuery not to set contentType
+                success: function (arg, a1, a2) {
+                    console.log(arg);
+                    console.log(a1);
+                    console.log(a2);
+                    window.location.reload();//刷新页面
+                }
+            })
+        })
+
+        //预览头像
+        $("#uploadImg").on("change",function () {
+            // alert(1);
+            var file_obj = document.getElementById('uploadImg').files[0];
+            var show_img  = document.getElementById("setUserHeadIcon");
+            show_img.src = window.URL.createObjectURL(file_obj);
+            show_img.style.display = 'block';
+        })
+
+
+        // 判断是否登录以及获取登录的用户登录
+        function getUserInfo() {
+            $.ajax({
+                url: "/login/",
+                type: "GET",
+                data: {
+                    what: "getUserInfo"
+                },
+                success: function (data){
+                    console.log("function -> getUserInfo() -----");
+                    var obj =  $.parseJSON(data);
+                    console.log(obj);
+                    // console.log(obj['status']);
+                    // console.log(obj['userName']);
+                    if(obj['status'] == "activate"){
+                        $(".infoTag").addClass("hidden");
+                        $("#userInfo_i").removeClass("hidden")
+                        console.log(obj['headIconPath']);
+                        console.log(obj['email']);
+                        $("#setUserHeadIcon").attr('src',obj['headIconPath']);
+                        $("#userName_i").html(obj['userName']);
+                        $("#userEmail_i").val(obj['email']);
+                    }
+                    else if(obj['status'] == "nonactivated"){
+                        $(".infoTag").addClass("hidden");
+                        $("#relogin_i").removeClass("hidden")
+                    }
+                }
+            })
+        }
+        getUserInfo();
+    </script>
+</body>
+</html>

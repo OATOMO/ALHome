@@ -1,0 +1,113 @@
+=============================css=================================
+在标签上设置style属性就是css
+    -边框 border:1px solid red;  #边框像素及颜色
+
+
+/* css注释风格 */
+    -backgroung-color: #xxxxxx
+    -height: xxxpx
+    -width: xxxpx
+    -font-size: xxxpx  //字体大小
+    -font-weight:      //字体加粗
+    -color:             //字体颜色
+    -text-align:center  //字体水平居中
+    -line-height:[height] //垂直居中
+    -opacity:0.5        //透明
+    -z-index:5          //层级顺序
+    -border-radius:xpx //圆角
+
+
+
+一.使用方法
+    -使用方法 1
+    <div style="backgroung-color:red"><div> #在标签中直接使用
+
+    -使用方法 2
+    #添加在<head>中
+    <head>
+        <style>
+            #ID{       //(#)号代表id名,id选择器#
+                backgroung-color:red;
+                height: 100px;
+            }
+            .CLASS{     //(.)号代表class名,class选择器.
+                backgroung-color:red;
+                height: 100px;
+            }
+            div{     //选择所有的<div>标签,标签选择器
+                backgroung-color:red;
+                height: 100px;
+            }
+            span div{   //(空格)关联选择器,选择所以<span>标签里的<div>标签(可以很多层,多种选择器类型混用)
+                backgroung-color:red;
+                height: 100px;
+            }
+            #ID1,#ID2,#ID3,.CLASS1{  //(,)号表示多种类型同时选择
+                backgroung-color:red;
+                height: 100px;
+            }
+            input[type="text"]{     //([])属性选择器,可是使用没有的自定义属性
+                backgroung-color:red;
+                height: 100px;
+            }
+
+            .a:hover .b{        //鼠标移到.a class时,影响(隐藏)a 下边的 b
+                display:none;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="ID" class="CLASS"></div>
+    </body>
+    -使用方法 3
+        -创建css文件.然后在html文件中引用
+        <link rel="stylesheet" href="css/commons.css" />
+
+    *样式优先级
+        -如果一个标签有两个样式,不重合的话融合两个样式
+        -优先级,标签上的style > head里style最下 >head里style最上(就近原则)
+
+    ----* float(属性)
+        - 让标签浮动起来,块级标签也可以堆叠
+        float:left
+        float:right
+        <div style="clear:both;"></div>     #让父级div重新管住float的div
+
+    ----*display(属性)
+        - display:nona;      #让标签消失
+        - display:inline;    #将块级标签改为内联标签
+        - display:block;     #将内联标签变为块级标签
+        - display:inline-block;  #具有inline的属性,默认有多宽占多宽,具有block可以设置高度宽度的属性
+        *****
+            内联标签无法设置高度,宽度,边距
+    ----*padding margin(0,auto)     #边距
+            -margin: 外边距,与别元素的距离
+                margin:0,auto;      #上下边距为0,左右自动居中
+            -padding: 内边距
+
+    ----*position:
+        -position:fixed;    #层叠,相对位置固定
+            <div style="width:50px;height:50px;backgroung-color:black;
+            position:fixed;bottom:0;right:0">返回顶部</div>     #浮在右下脚
+        -position:absolute; #层叠,绝对位置固定
+            relative+absolute:
+            <div style="position:relative">
+                <div style="position:absolute;top:0;left:0;">   #变成放在父类标签的某个位置
+                123
+                </div>
+            </div>
+    ----*overflow
+        -overflow:hidden    #子标签超过父标签的话子标签隐藏超过的部分
+        -overflow:auto      #子标签超过父标签的话子标签隐藏超过的部分,再出现滑块
+
+    ----*伪标签hover
+        标签选择符:hover{
+            #鼠标悬停时使用的样式
+        }
+    ----&backgroung
+        -backgroung-color:red;
+        -backgroung-image:url('image/xxx.png')
+        -backgroung-repeat:repeat-y;只只向纵向扩充
+        -backgroung-position-x;     #背景图沿x轴移动
+        -backgroung-position-y;     #背景图沿y轴移动

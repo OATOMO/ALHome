@@ -1,0 +1,16 @@
+<script src="/static/jquery-3.2.1/jquery-3.2.1.js"></script>
+<script src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="/static/m_js/m_login.js"></script><!--自己的JS文件-->
+<script>
+    $(".myTable").click(function () {   //table选择切换
+        $(".myTable").removeClass('active');
+        $(this).addClass("active");
+    })
+
+    $("#logup_button,#login_button").hover(function(){
+        $(this).css("background-color","burlywood");
+    },function(){
+        $(this).css("background-color","#eeeeee");
+    })
+</script>
+

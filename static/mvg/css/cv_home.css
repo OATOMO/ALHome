@@ -1,0 +1,37 @@
+body{
+    margin: 0;
+}
+
+.pg-header-class {
+    height: 48px;
+    background-color: #ffb0ac;
+}
+
+.pg-content-class{
+
+}
+
+.pg-footer-class{
+
+}
+
+/*侧面菜单*/
+.pg-content-class .menu{
+    width: 20%;
+    background-color: bisque;
+}
+
+/*内容*/
+.pg-content-class .content{
+    width: 80%;
+    background-color: #7596ff;
+}
+
+.left{
+    float: left;
+}
+
+.right{
+    float: right;
+}
+

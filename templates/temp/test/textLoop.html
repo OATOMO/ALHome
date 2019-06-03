@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div  id='i1'> ATOM&nbsp;&nbsp;</div>
+
+    <script>
+        setInterval('fun1();',1000);
+        
+        function fun1() {
+            var text_obj = document.getElementById('i1');
+            var text = text_obj.innerText;
+            var f = text.charAt(0);
+            var l = text.substring(1,text.length);
+            text_obj.innerText = l+f;
+        }
+    </script>
+</body>
+</html>

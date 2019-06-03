@@ -1,0 +1,6 @@
+MVG模块功能需求
+    - SFM程序web接口                            x
+    - SLAM程序web接口                           x
+    - MVG相关内容资料,paper,源码预览下载页面      x
+    - MVG相关问题讲解,教程页面                   x
+    - WebGL展示3维点云                          x

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="ATOM,机器视觉,SFM,SLAM">
+    <title>ATOM</title>
+    <!--for test-->
+    <!--<link rel="stylesheet" href="../../static/css/ATOM_home.css">-->
+    <!--<link rel="stylesheet" href="../../static/css/component.css">-->
+    <!--<link rel="stylesheet" href="../../static/fonts/fontawesome-free-5.0.1/web-fonts-with-css/css/fontawesome-all.min.css">-->
+
+    <!--for django-->
+    <link rel="stylesheet" href="/static/css/ATOM_home.css">
+    <link rel="stylesheet" href="/static/css/component.css">
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--<link rel="stylesheet" href="/static/fonts/fontawesome-free-5.0.1/web-fonts-with-css/css/fontawesome-all.min.css">-->
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css"/>
+
+
+</head>
+<body >
+    <!--头部div-->
+    <div class="bg_head_class navbar-fixed-top" >
+        <!--<div class="head_menu_left">logo</div>-->
+        <!--登录注册按钮-->
+        <div class="head_menu_left">
+            <img src="../../static/img/atom_log.png" style="width:50px;height: 50px; ">
+        </div>
+        <div class="head_menu_left">ATOM</div>
+        <div id="log_button">
+            <button class="head_menu_right" data-toggle="modal" data-target="#login_modal">注册</button>
+            <button class="head_menu_right" data-toggle="modal" data-target="#logup_modal">登录</button>
+        </div>
+        <!--用户信息-->
+        <div id="login_userInfo" class="hidden userInfo_right" style="float: right;text-align:center;
+    line-height:50px;margin-right: 20px;">
+            <img id="userHeadIcon" style="margin-right: 5px;width: 50px;height: 50px;display: flex;border-radius: 50%;align-items: center;justify-content: center;overflow: hidden;float: left">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary" id="login_userInfo_userName">userName</button>
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">...</a></li>
+                <li><a href="#">...</a></li>
+                <li><a href="#">...</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#" id="logout_button">注销</a></li>
+            </ul>
+            </div>
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <!--主体div 包含按钮-->
+    <div class="bg_body_class">
+        <div class="hi-icon-wrap hi-icon-effect-1 hi-icon-effect-1a">
+            <!--第一个按钮"机器视觉"-->
+            <div  class="button_size">
+                <a href="/ATOM/CV/cv_home.html" class="hi-icon hi-icon-mobile" title="VC">Mobile</a>
+                <div class="button_describe" >
+                    <!--<i class="fab fa-android" style=" color: white"></i>-->
+                    <span>Machine Vision</span>
+                </div>
+
+            </div>
+            <!--第二个按钮"工具"-->
+            <div class="button_size" >
+                <a href="/ATOM/TOOLS/tools_home.html"  class="hi-icon hi-icon-screen">Desktop</a>
+                <div class="button_describe" >Tools</div>
+            </div>
+
+            <div class="button_size">
+                <a href="#set-1" class="hi-icon hi-icon-earth">Partners</a>
+                <div class="button_describe">cat</div>
+            </div>
+
+            <div class="button_size">
+                <a href="#set-1" class="hi-icon hi-icon-support">Support</a>
+                <div class="button_describe">FTP</div>
+            </div>
+
+            <!--<a href="#set-1" class="hi-icon hi-icon-screen">Desktop</a>-->
+            <!--<a href="#set-1" class="hi-icon hi-icon-earth">Partners</a>-->
+            <!--<a href="#set-1" class="hi-icon hi-icon-support">Support</a>-->
+            <!--<a href="#set-1" class="hi-icon hi-icon-locked">Security</a>-->
+        </div>
+    </div>
+    <!----------------注册模态框start----------- -->
+    <div class="modal fade" id="login_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">注册</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+                <input type="text" id="i_user" placeholder="user" />
+                <span class="glyphicon glyphicon-ok hidden" aria-hidden="true" id="i_user_ok"></span>
+                <div class="alert alert-danger hidden" role="alert" id="i_user_check"></div>
+            </p>
+            <p>
+                <input type="password" id="i_password" placeholder="Password" />
+                <span class="glyphicon glyphicon-ok hidden" aria-hidden="true" id="i_password_ok"></span>
+                <div class="alert alert-danger hidden" role="alert" id="i_password_check"></div>
+            </p>
+            <p>
+                <input type="password" id="i_repassword" placeholder="rePassword" />
+            </p>
+            <p>
+                <div>
+                    男: <input type = "radio" name = "gender" value = "man" />
+                    女: <input type = "radio" name = "gender" value = "woman"/>
+                </div>
+            </p>
+            <p>
+                <input type="email" id="i_email" placeholder="e-mail" />
+                <span class="glyphicon glyphicon-ok hidden" aria-hidden="true" id="i_email_ok"></span>
+                <div class="alert alert-danger hidden" role="alert" id="i_email_check"></div>
+            </p>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary" id="btn_login">注册</button>
+          </div>
+        </div>
+      </div>
+    </div>
+<!----------------注册模态框end----------- -->
+    <!----------------登录模态框start----------- -->
+    <div class="modal fade" id="logup_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel_up">登录</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+                <input type="text" id="i_user_up" placeholder="user" />
+            </p>
+            <p>
+                <input type="password" id="i_password_up" placeholder="Password" />
+                <!--登录错误提示框-->
+                <div class="alert alert-success hidden" role="alert" id="logup_check_ok"></div>
+                <div class="alert alert-danger hidden" role="alert" id="logup_check"></div>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary" id="btn_logup">登录</button>
+          </div>
+        </div>
+      </div>
+    </div>
+<!----------------登录模态框end----------- -->
+<script src="/static/jquery-3.2.1/jquery-3.2.1.js"></script>
+<script src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+    <!--自己的JS文件-->
+<script src="/static/m_js/m_login.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+python manage.py check                      //check 命令运行 Django 系统检查框架，即验证 Django 项目的一系列静态检查。
+python manage.py makemigrations [appName]   //告诉 Django 你对模型做了修改(数据库同步 )
+python manage.py sqlmigrate [appName] 0001  //sqlmigrate 命令的参数是迁移名称，输出的结果是对应的 SQL
+python manage.py migrate                    //真正的创建表(每次修改model都得运行一下)
+
+--------------------------Queryset数据查询函数--------------------------
+使用方法   <model名称.objects.all()>
+filter()    :过滤
+exclued()   :不符合条件的
+order_by()  :排序
+all()       :所有
+get()       :查找唯一元素,如果不唯一则报错
+first()     :获取第一个元素
+last()      :获取最后一个
+exists()    :检测某条记录是否存在
+update()    :更新字段
+delete()    :删除记录
+create()    :创建
+save()      :保存到数据库
+-----------------------------------------------------------------------
+
+1.Ajax
+    #1.发请求的方式
+        (1).直接在地址栏输入URL         GET请求
+        (2).a标签                      GET请求
+        (3).form表单                   GET/POST请求
+        (4).Ajax                      GET/POST请求
+
+2.cookie和session
+    Cookie的由来?
+        -因为http的请求是无状态的,每一次请求都是独立的(对于服务端 一切都只如初见)
+    Cookie是什么?
+        -就是保存在预览器的键值对
+        -服务端控制着响应,在响应里可以让预览器在本地保存键值对(Cookie),
+        下一次请求在发送的时候就会自动携带这个Cookie值
+    Cookie的应用:
+        -登录
+        -记录用户的预览习惯
+        -简单的投票限制
+    Cookie是服务端设置的,我们可以设置预览器禁用Cookie
+    Cookie的使用:
+        def login(request):
+            rep = redirect("/home/")    #跳转请求
+            rep.set_cookie("m_key","m_value")
+            #rep.set_signed_cookie("m_key","m_value",salt="123")#设置加盐的Cookie
+            return rep
+        def home(request):
+            #从请求的Cookie中找键值对
+            ret = request.COOKIES.get("m_key","0")
+            #取加盐的Cookie
+            #ret = request.set_signed_cookie("m_key",default='0',salt="123")
+            if ret == "m_value":
+                #表示已登录过
+                return render(request,"home.html")
+            else :
+                return render(request,"login.html")
+        def logout(request):
+            #如何删除Cookie
+            rep = redirect("/login/")
+            rep.delete_cookie("m_key")
+            return rep
+    Cookie有效期:
+        -不设置超时时间默认关闭预览器就失效(max_age=10 超时参数控制)
+
+    Session的由来:
+        -Cookie虽然在一定程度上解决了"保持状态"的需求,但是由于Cookie本身有最大支持4096字节,
+        以及Cookie自身保存在客户端,可能被拦截或窃取,因此就需要更多的字节,并且它保存在服务端,
+        有较高的安全性,这就是Session.
+        -问题来了,基于http协议的无状态性,服务器根本不知道服务者是谁,那么Cookie就起到桥接的作用.
+        -我们可以给每个客户端分配一个唯一的ID,这样用户在访问的时候,通过Cookie,服务器就知道访问
+        者是谁,再根据不同的Cookie,在服务器上保存一段时间的私密资料,如账户密码等.
+
+    Session是什么?
+        -保存在服务端的键值对
+    Django中session做的事:
+        -存session
+            1.在服务端生成随机字符串
+            2.生成和随机字符串对应的大字典,用来保存用户数据
+            3.随机字符串当成Cookie返回给预览器
+            request.session['is_login'] = '1'#生成大字典和随机字符串
+        -取session
+            1.从请求携带的Cookie里找到随机字符串
+            2.拿到随机字符串取session中找对应的大字典
+            3.从大字典中根据key取值
+            ret = request.session.get('is_login')
+    Session中的优势
+        1.比Cookie存储的数据多
+        2.安全性更好

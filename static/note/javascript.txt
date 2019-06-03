@@ -1,0 +1,241 @@
+//在javascript中表示注释
+//三元运算  var v = 条件?真值:假值
+
+0.作用域
+    其他语言:
+        func(){
+            if(1==1){
+                string name = "1123";
+            }
+            printf(name);   //错误(以块为作用域)
+        }
+    python:
+        def func(){
+            if 1==1:
+                name = "atom"
+            print(name)     //正确(以函数为作用域)
+        }
+    javaScript:
+        function func(){
+            if(1==1){
+                var name = "atom";
+            }
+            console.log(name)   //正确(以函数为作用域)
+        }
+    (2)函数的作用域在函数未被调用之前已将创建
+    (3)函数的作用域存在作用域链,也是在调用之前就已创建
+        function func(){
+            function inner(){   //func()执行前就已创建
+
+            }
+        }
+    (4)函数局部变量提前声明
+        function func(){
+            console.log(name);      //不报错,输出undefined
+            var name = "123";
+        }
+
+1.存在形式
+    - *第一种
+        <head>
+            <script>
+                代码...
+            </script>
+        </head>
+    - *第二种
+        也可以写在body内部的最下边
+        <head>
+            <script src="commons.js"></script>  //导入立即执行
+        </head>
+    - *第三种
+
+2.变量
+    name = "atom"       //弱类型语言,默认是全局变量
+    var name = "lz"     //局部变量
+
+    age_s = "18";
+    agr_i = parseInt(age_s);//字符串转数字
+    --- 数组
+        a = [11,22,33];
+    --- 字典
+        a = {'k1':'v1','k2','v2'};
+
+3.定时器
+    var obj1 = setInterval("fun(xx);",2000);    //2000ms执行一下fun()
+    clearInterval(obj1);     //清除定时器
+
+    vat obj2 = setTimeout(function(){},5000);  //只执行一次
+    clearTimeout(obj2);
+4.函数
+    function f1(){
+    }
+
+5.log
+    console.log()   //在console处打印
+
+6.寻找
+    document.getElementById("")             //根据Id找标签
+    document.getElementById("").innerText   //获取该ID内部文本
+
+7.循环
+    1 --------
+    a = [11,22,33,44]
+    for(var i in a){        //i给的是索引
+        console.log(a[i])
+    }
+
+    a = {'k1':'v1','k2','v2'};
+    for(var i in a){        //i给的是键值KEY
+        console.log(a[i])
+    }
+
+    2 --------
+    for(var i = 0;i < 10;i++){
+    }
+8.条件语句
+    if(1==1){}      //1=='1'    true    类型可以不同
+    if(1!=1){}
+    if(1===1){}     //1==='1'   false   类型也得相同
+    if(1!==1){}
+9.函数
+    -普通函数:
+        function fun(形参){
+        }
+    -匿名函数:
+        setInterval(function(){console.log(123);},5000);    //临时构造的一个函数
+    -自执行函数:
+        (function(arg){console.log(arg);} )(参数)    //解释时自动执行一次
+
+
+10.DOM
+    将HTML文本转换为对象来进行操作
+    (1)找到标签
+        -----直接寻找
+            document.getElementById('id1')          //获取单个元素
+            document.getElementsByTagName('div')    //获取多个元素(列表),通过索引取值
+            document.getElementsByClassName('div')  //获取多个元素(列表)
+            document.getElementsByName('div')       //通过name属性获取
+        -----间接寻找
+            tag = document.getElementById('id1')
+            tag.parentElement   //找父节点
+            tag.children        //所有子标签
+            tag.firstElementChild   //第一个子标签
+            tag.lastElementChild
+            tag.nextElementSibling //下一个兄弟标签
+            tag.previousElementSibling
+
+    (2)操作标签
+        -------------
+        | innerText
+        | innerHTML
+        | value <input ><select ><textarea >
+        -------------
+        obj.innerText       //获取标签文本内容
+        obj.innerText="xx"  //对标签文本重新赋值
+        obj.className = "c1 c2 c3"      //获取标签class属性
+            ----------obj.classList
+            | obj.classList.add("c1")     //添加多个class
+            | obj.classList.remove("c1")
+        obj.style.xxx   //直接操作标签内style的某个属性
+        obj.setAttribute("属性","属性值");   //向标签内的style添加一个属性
+        obj.removeAttribute("属性");   //删除标签内style的一个属性
+
+11.序列化
+    li = [11,22,33,44];
+    s = JSON.stringify(li);     //对象转字符串
+    newLi = JSON.parse(s);      //字符串转对象
+
+12.转义
+    decodeURL()             //URL中未转义的字符
+    decodeURLComponent()    //URL组件中未转义的字符
+    enCodeURL()             //URL中的转义字符
+    enCodeURLComponent()    //URL组件中转义的字符
+    escape()                //对字符串转义
+    unescape()              //给转义字符串解码
+    urlError()              //由编码解码方法抛出
+
+13.cookies
+    -保存登录状态
+
+14.eval
+    -python:
+        val = eval("1+1")   //执行表达式,有返回值
+        exec(执行代码)       //无返回值
+    -javaScript:
+        eval();         //有python eval 和 exec的功能
+
+12.时间
+    Date 类对象
+    var d = new Date(); //创建对象
+    d.setMinutes(d.getMinutes() + 4)    //增加4分钟
+
+13.对象
+    ---------------------------这样会造成成员函数重定义
+    function Foo(n){
+        this.name = n;
+        this.sayName = function(){
+            console.log(this.name);
+        }
+    }
+
+    var obj1 = new Foo("Tom");
+    obj1.sayName();
+    --------------------------这样才是正确定义方法
+    function Foo(n){
+        this.name = n;
+    }
+    //Foo的原型,只创建一次
+    Foo.prototype = {
+        'sayName':function(){
+            console.log(this.name);
+        }
+    }
+
+14.触发事件
+    onclick()       //点击事件
+    onFocus()       //焦点移到
+    onBlur()        //焦点移出
+    onmouseover()   //鼠标移入
+    onmouseout()    //鼠标移出
+    (2) --绑定方法1
+        <input type="button" onclick="click(this)">
+        function click(t){
+            console.log(t);
+            t.style.backgroundColor = 'red';
+        }
+        --绑定方法2
+        <script>
+            document.getElementById('i1').onclick = function(){
+                this.style='red';   //this为当前触发函数的标签
+            }
+        </script>
+
+15.创建标签
+    -方式1
+        var tag = "<p><input type="text" /></p>";
+            //第一个参数只能是4种,beforeBegin,afterBegin,beforeEnd,afterEnd.
+        document.getElementById("i1").insertAdjacentHTML("beforeEnd",tag);
+    -方式2
+        var tag = document.createElement('input');
+        tag.setAttribute('type','text');
+        tag.style.color = 'red';
+
+        var tag = document.createElement('p');
+        p.addendChild(tag);
+
+        document.getElementById("i1").appendChild(tag);
+
+16.提交表单
+    <form id="f1" action="www.xxx.com">
+        <input type="text" />
+        <a onclick="my_submit();" >提交</a>
+    </form >
+
+    function my_submit(){
+        document.getElementById("f1").submit();
+    }
+
+    vat url = location.href;        //获取当前url
+    location.href = "www.baidu.com" //设置当前url
+    location.reload() ;     //刷新 等于 location.href = location.href;
+

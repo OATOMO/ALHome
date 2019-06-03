@@ -1,0 +1,102 @@
+<!-- 注释的内容 -->
+
+1.head中的标签
+    - <meta >   编码,跳转,刷新,关键字,描述,IE兼容
+    - <title>   标题
+    - <link>    ~
+        <link rel="stylesheet" type="text/css" href="css/common.css">   #css
+        <link rel="short icon" href="image/favic.ico">                  #icon
+    - <style>   ~
+    - <script>  ~
+
+2.body中的标签 (20个)
+                (块级标签:占用整行)(内联标签:不占用整行)
+    =========================================================
+    - 各种符号(&nbsp; 空格)(&gt; 大于号>)(&lt; 小于号<)     #网页特殊符号
+    - <p>       段落(块级标签)
+    - <br />    换行(自闭合)
+    - <h[d]>    标题标签(块级标签)
+    - <span>    白板(内联标签)
+    - <div>     白板(块级标签)
+    - <textarea></textarea>     多行文本输入
+    - <a href="http://www.baidu.com" target="_blank"></a>   #超链接,(内联标签target="_blank"新建页面打开)
+        <a href="#13">跳转</a>
+            <div id = "13">13</div>  #靠id进行页内跳转(id不能重复)
+        ----------------------------------------
+    - <img src="1.jpg" style="height:200px;width:200px" >     #图片标签
+        <a href="http://www.baidu.com">     #可以包在<a>标签中,用作跳转
+            <img src="1.jpg" style="height:200px;width:200px" >
+        </a>
+        ----------------------------------------
+    - <input />   (内联标签)
+        <input type = "text" name = "xxx"/>         #name属性用于后台取数据
+        <input type = "password" />
+        <input type = "button" value = "jon1" />    #普通按钮   value-按钮名字
+        <input type = "submit" value = "jon2" />    #提交表单
+        <input type = "radio" name = "xx" checked />#复选框(多个复选框name相同时为"互斥关系",checked表示默认选择)
+        <input type = "checkbox" />                 #多选框
+        <input type = "file" name = "fname"/>       #文件选择框,依赖form表单的enctype="multipart/form-data"属性
+        <input type = "reset" value="重置">          #重置按钮
+            ----------------------------------------
+    - <form>    表单
+        <form action="http://loaclhost:8888/index" method="GET">     #表单提交到http://loaclhost:8888/index
+            <input type = "text" name = "user" />
+            <input type = "password" name = "password" />
+            <input type = "button" value = "jon1" />
+            <input type = "submit" value = "jon2" />
+        </form>
+    #checkbox用name分组value值分选项,
+        <form action="http://loaclhost:8888/index" method="GET" enctype="multipart/form-data">     #表单提交到http://loaclhost:8888/index
+            <div>
+                篮球: <input type = "checkbox" name = "favor" value = "1"/>
+                足球: <input type = "checkbox" name = "favor" value = "2"/>
+                排球: <input type = "checkbox" name = "favor" value = "3"/>
+                <input type = "file" name = "fname"/> #文件选择框,依赖form表单的enctype="multipart/form-data"属性
+            </div>
+        </form>
+        ----------------------------------------
+    - <select name = "city" muiltiple>      #下拉选择框,靠select的name取option的value,muiltiple表示可以多选
+        <option value = "1">北京</option>
+        <option value = "2">上海</option>
+        <option value = "3" selected="selected">广州</option> #selected="selected"默认选中
+      </select>
+              ----------------------------------------
+    - <ul>  #列表 ,<ul>是以点开头<ol>是以数字开头还有<dt>与<dd>用来分层(用来区分标题与内容)
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+      </ul>
+              ----------------------------------------
+    - <table>
+        <tr>    #<tr>表示一行
+            <td>第一行,第一列</td>   #<td>表示列
+            <td>第一行,第二列</td>   #<td>表示列
+            <td>第一行,第三列</td>   #<td>表示列
+        </tr>
+        <tr>    #<tr>表示一行
+            <td>第二行,第一列</td>   #<td>表示列
+            <td>第二行,第二列</td>   #<td>表示列
+            <td>第二行,第三列</td>   #<td>表示列
+        </tr>
+      </table>
+
+      <table>   #正规写法
+        <thead>
+            <tr>    #一行
+                <th colspan="2" rowspan="2">表头1</th> #colspan="2" rowspan="2"横向占2格,纵向占两格
+                <th>表头2</th>
+                <th>表头3</th>
+            </tr>
+        </thead> #表头
+        <tbody>
+            <tr>
+                <td>内容1</td>
+                <td>内容2</td>
+                <td>内容3</td>
+            </tr>
+        </tbody> #内容
+      </table>
+                    ----------------------------------------
+    - <label>   #(普通文本)
+        <label for="username">用户名</label>   #可以用for属性将点击label时的焦点一到指定ID
+        <input id="username" type="text" name="user" />

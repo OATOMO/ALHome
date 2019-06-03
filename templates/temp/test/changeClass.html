@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .c1{
+            margin: 0;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: #ff83e5;
+            opacity: 0.6;
+            z-index: 9;
+        }
+        .c2{
+            /*margin: 0;*/
+            position: fixed;
+            width: 500px;
+            height: 400px;
+            background-color: white;
+            left: 50%;
+            top: 50%;
+            margin-left: -250px;
+            margin-top: -200px;
+            z-index: 10;
+        }
+
+        .hide{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <input type="button" value="open" onclick="f_showMode()">
+    <!--遮罩层-->
+    <div id="i1" class="c1 hide"></div>
+    <!--弹出层-->
+    <div id="i2" class="c2 hide">
+        <p><input type="text"></p>
+        <p><input type="text"></p>
+        <p><input type="button" value="取消" onclick="f_hideMode()">
+        <input type="button" value="确定"></p>
+    </div>
+
+    <script>
+        function f_showMode() {
+            document.getElementById("i1").classList.remove("hide");
+            document.getElementById("i2").classList.remove("hide");
+        }
+        function f_hideMode() {
+            document.getElementById("i1").classList.add("hide");
+            document.getElementById("i2").classList.add("hide");
+        }
+    </script>
+</body>
+</html>

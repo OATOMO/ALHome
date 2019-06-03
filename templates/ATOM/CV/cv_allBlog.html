@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cvAllBlog</title>
+    <base target="_blank">
+    <link rel="stylesheet" href="/static/mvg/css/cv_home.css" />
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css"/>
+    <style>
+        .mTag{
+            padding:5px;
+            margin-left: 5px;
+            border:1px solid #866ab3;
+            border-radius:50px;
+        }
+    </style>
+</head>
+<body>
+    <!--引入导航栏html-->
+    {% include 'ATOM/include/navbar_button_I.html' %}
+
+    <div class="container">
+    <div class="row">
+        <div class="col-sm-8"><!-- blog list -->
+            <div id="blog_list"><!-- blog列表 -->
+
+            </div>
+
+            <nav aria-label="Page navigation"><!--分页-->
+              <ul class="pagination">
+                <li id="addPaging_i">
+                  <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                    </li>
+
+                    <!--<li><a href="#">1</a></li>-->
+                    <!--<li><a href="#">2</a></li>-->
+                    <!--<li><a href="#">3</a></li>-->
+                    <!--<li><a href="#">4</a></li>-->
+                    <!--<li><a href="#">5</a></li>-->
+
+                    <li id="addPaging_i2">
+                  <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav><!--分页 end-->
+        </div><!-- col-sm-8 end-->
+        <div class="col-sm-3"><!-- tag -->
+        </div><!-- col-sm-3 end-->
+    </div><!-- row end-->
+    </div><!-- container end-->
+    <!--引入导航栏脚本-->
+{% include 'ATOM/include/navbar_js_I.html' %}
+<script>
+    function getPage() {    //获取文章数与页数 生成文章与分页
+        $.ajax({
+            url: "/getBlogInfo/",
+            type: "POST",
+            data: {
+                what: "getBlogPage",
+                csrfmiddlewaretoken:$("[name='csrfmiddlewaretoken']").val()
+            },
+            success: function (data){
+                var obj =  $.parseJSON(data);
+                // console.log(obj);
+                var htmlIdList = Object.keys(obj);
+
+                var pageNumber = parseInt( (htmlIdList.length/10)+1 );//页数
+                // console.log(pageNumber);
+                // console.log(htmlIdList[0]);
+                var currentIDList = currentPage(currentPageNumber,htmlIdList,10);
+                setPaging(currentPageNumber,pageNumber);
+                showCurrentPage(currentPageNumber,currentIDList,obj);
+                // for(var i in currentIDList){
+                //     //i是"ID+num" html字典key值
+                //     $("#blog_list").append("123");
+                // }
+
+            }
+        })
+    }
+
+/*
+@currentP :当前页号
+@ htmlIdList :html Id 列表
+@ num : 每页多少条blog
+@return : 返回当前页blog的ID [数组]
+*/
+function currentPage(currentP,htmlIdList,num) {
+    console.log("当前页 "+currentP);
+    var currentIDList = [];
+    for (var i = 0+((currentP-1)*num);i < htmlIdList.length;i++ ){
+        currentIDList.push(htmlIdList[i]);
+    }
+    return currentIDList;
+}
+
+/*
+@currentP :当前页号
+@Pages:总页数
+*/
+function setPaging(currentP,Pages) {  //设置分页
+    var numberList=[]; //显示的页号列表
+    if(Pages>5){
+        // numberList = []
+    }
+    else{//小于5页 全部显示
+        for(var i = 0;i < Pages;i++)
+        numberList.push(i+1);
+    }
+
+
+    for (var i in numberList){
+        console.log(numberList[i]);
+        var html_str = '<li class="mPaging"><a onclick="onClickPage(this)">' + numberList[i].toString() + '</a></li>';
+        $("#addPaging_i").after(html_str);
+    }
+
+    if (currentP <= Pages){// 禁用下一页
+        $("#addPaging_i").addClass('disabled');
+    }else{
+        $("#addPaging_i").removeClass('disabled');
+    }
+    if (currentP >= Pages){// 禁用上一页
+        $("#addPaging_i2").addClass('disabled');
+    }else{
+        $("#addPaging_i2").removeClass('disabled');
+    }
+
+
+}
+/*
+    生成当前页面blog列表
+    @ currentP :当前页号
+    @ currentIDList :html Id 列表
+    @ obj : 原始blog_list 字典
+*/
+function showCurrentPage(currentP,currentIDList,obj){
+    for(var i in currentIDList){
+        //i是"ID+num" html字典key值
+        // var title = obj[i]["title"];
+        // console.log(title);
+        // console.log(obj[currentIDList[i]]["title"]);
+        var mTitle = obj[currentIDList[i]]["title"];
+        var mDescription = obj[currentIDList[i]]["description"];
+        var mDate = obj[currentIDList[i]]["date"];
+        var mTag = obj[currentIDList[i]]["tag"];
+        var mUrl = obj[currentIDList[i]]["url"];
+        var mTag_str = '';
+        for (var i in mTag){    //设置每个标签样式
+            var temp = '<a class="bg-success mTag" href="'+ '/ATOM/blog_tag/' + mTag[i] +'">' + mTag[i] + '</a>';
+            mTag_str+=temp;
+        }
+
+
+         html_str = '<div class="panel panel-default">'+
+        '<div class="panel-heading">' + '<a href="'+ mUrl +'">' + mTitle + '</a>' +
+        '<p class="pull-right"> -Tag:' + mTag_str + '</p>'  +  '</div>'+
+        '<div class="panel-body"> ' + '<p><a href="' + mUrl + '">'+ mDescription +'</a></p>'+
+        '</div> </div>';
+
+        // html_str = '<div class="mBlogItemBox">' +
+        //         '<a href="'+ mUrl +'">' + mTitle + '</a>'+
+        //         '<p><a href="' + mUrl + '">'+ mDescription +'</a></p>'+
+        //     '</div>';
+        // console.log(currentIDList[i]);
+        $("#blog_list").append(html_str);
+    }
+}
+
+function pageInit(){
+    this.currentPageNumber = 1;
+    getPage();
+}
+
+function onClickPage(obj) {
+    // console.log(obj.text);
+}
+
+
+pageInit();
+
+</script>
+</body>
+</html>

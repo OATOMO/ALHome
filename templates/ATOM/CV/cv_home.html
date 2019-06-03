@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cvHome</title>
+    <link rel="stylesheet" href="/static/mvg/css/cv_home.css" />
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/static/js/slider/css/style.css" />
+
+</head>
+<body>
+    <!--引入导航栏html-->
+    {% include 'ATOM/include/navbar_button_I.html' %}
+    <div class="container-fluid" style="margin-top: -20px">
+    <div class="row">
+        <div id="slide" class="slide">
+		<ul>
+			<li><img src="/static/img/CV_home/sfm.png"></li>
+			<!--<li><img src="/static/img/home-bg4.png"></li>-->
+			<!--<li><img src="/static/img/home-bg5.png"></li>-->
+			<!--<li><img src="/static/img/home-bg6.png"></li>-->
+		</ul>
+		<div>
+			<span class="prev_btn"> < </span>
+			<span class="next_btn"> > </span>
+		</div>
+	    </div>
+    </div>
+    </div>
+
+
+
+    <p>主页</p>
+
+    <!--引入导航栏脚本-->
+    {% include 'ATOM/include/navbar_js_I.html' %}
+    <script src="/static/js/slider/js/slide.js"></script>
+</body>
+</html>
