@@ -29,37 +29,18 @@ Tools_ID_list = {
     'base64':'ATOM/TOOLS/tools_base64.html/',
 }
 
-def line3d():
-    _data = []
-    for t in range(0, 25000):
-        _t = t / 1000
-        x = (1 + 0.25 * math.cos(75 * _t)) * math.cos(_t)
-        y = (1 + 0.25 * math.cos(75 * _t)) * math.sin(_t)
-        z = _t + 2.0 * math.sin(75 * _t)
-        _data.append([x, y, z])
-    c = (
-        Line3D()
-            .add(
-            "",
-            _data,
-            xaxis3d_opts=opts.Axis3DOpts(Faker.clock, type_="value"),
-            yaxis3d_opts=opts.Axis3DOpts(Faker.week_en, type_="value"),
-            grid3d_opts=opts.Grid3DOpts(width=100, height=100, depth=100),
-        )
-            .set_global_opts(
-            visualmap_opts=opts.VisualMapOpts(
-                max_=30, min_=0, range_color=Faker.visual_color
-            ),
-            title_opts=opts.TitleOpts(title="Line3D-基本示例"),
-        )
-    )
-    return c
-
 def ToolsStatisticsCount():
+    toolList = Tools_ID_list.keys()
+    x = toolList
+    y = []
+    for i in x:
+        y.append(findToolCountModel(i).toolCount)
+
     c = (
         Bar()
-        .add_xaxis(['1','2','3'])
-        .add_yaxis('text',[5,6,7])
+        # .add_xaxis(['1','2','3'])
+        .add_xaxis(x)
+        .add_yaxis('text',y)
         .set_global_opts(title_opts=opts.TitleOpts(title="Bar-基本示例", subtitle="我是副标题"))
     )
     return c
@@ -85,6 +66,26 @@ def toolsID(request,IDName):
     return render(request,retHtml )
 
 #-------------工具view----------------
+#--------------base-------------------
+
+#为tool模型增加使用次数
+#@toolID:工具名 @addCount:添加或减少的使用次数
+def toolCountadd(toolID,addCount):
+    if toolID in Tools_ID_list:
+        toolCM = findToolCountModel(toolID)
+        toolCM.toolCount = toolCM.toolCount + addCount
+        toolCM.save()
+
+#返回模型对象,没有的话重新创建一个
+def findToolCountModel(toolID):
+    try:
+        toolCM = toolUseCount.objects.get(toolID=toolID)
+    except toolUseCount.DoesNotExist:
+        toolCM = toolUseCount(toolID=toolID,toolCount=0)
+        toolCM.save()
+    return toolCM
+
+#-------------base end---------------
 #-------------base64-----------------
 def base64_pro(request):
     whatType = request.POST.get("what")
@@ -110,6 +111,7 @@ def base64_pro(request):
             base64_data = base64.b64encode(file.read())
             code = base64_data.decode() #解码成UTF-8
             strCode = code
+        toolCountadd('base64',1)
         return HttpResponse(strCode)
     elif whatType == "decode":  #解码
         code = request.POST.get("code")

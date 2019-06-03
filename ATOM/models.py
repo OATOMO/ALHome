@@ -95,3 +95,9 @@ class eyeCountModel(models.Model):
     starCount = models.BigIntegerField()
     def __str__(self):
         return "eyeCountModel -> " +self.blogID
+
+class toolUseCount(models.Model):
+    toolID = models.CharField(max_length=10)#工具名
+    toolCount = models.BigIntegerField()    #base64工具总使用次数
+    def __str__(self):
+        return "toolUseCount -> " +self.toolID
