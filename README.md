@@ -2,4 +2,7 @@
 
 import list :
 django
-import filetype
+filetype
+pyecharts
+pillow
+
