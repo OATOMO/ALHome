@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="0a9fd5fa-c9d6-48c4-9886-6275fc3c7101" name="ALHome-tenxun" url="http://129.211.117.24">
+        <fileTransfer host="129.211.117.24" port="22" rootFolder="/home/ubuntu/myEnv" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="fb21e6d2-9e0a-423b-ac8b-15f4a1f8badc" name="ALHome" url="http://129.211.117.24">
+        <fileTransfer host="129.211.117.24" port="22" rootFolder="/home/ubuntu/myEnv" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
