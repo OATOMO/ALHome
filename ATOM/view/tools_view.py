@@ -7,7 +7,7 @@ __author__ = 'Colby'
 from django.shortcuts import render
 from django.template import Template,Context,loader
 from django.template.loader import get_template
-from django.http import HttpResponse,Http404
+from django.http import HttpResponse,Http404,JsonResponse
 from django.http import FileResponse
 from django.contrib.auth.models import User
 from django.db import models
@@ -114,16 +114,31 @@ def base64_pro(request):
         toolCountadd('base64',1)
         return HttpResponse(strCode)
     elif whatType == "decode":  #解码
-        code = request.POST.get("code")
-        Bdata = base64.b64decode(code)
-        print(Bdata)
-        print(type(Bdata))
-        myFiletype = checkFileType(Bdata)
-        if myFiletype:#先判断文件类行,都不是的话视为str
-            response = FileResponse(Bdata)
-            # response['Content-Type'] = myFiletype
-            # response['Content-Disposition'] = 'attachment;filename="example.tar.gz"'
-            return response
+        whatfileType = request.POST.get("fileType")
+        if whatfileType == "0": #解码字符串
+            code = request.POST.get("code")
+            Bdata = base64.b64decode(code)
+            code = Bdata.decode()  # 解码成UTF-8
+            print(type(code))
+            return HttpResponse(json.dumps({"fileType": "0","data":code}, ensure_ascii=False))
+
+
+        elif whatfileType == "1":
+            code = request.POST.get("code")
+            Bdata = base64.b64decode(code)
+            # print(Bdata)
+            # print(type(Bdata))
+
+            myFiletype = checkFileType(Bdata)
+            if myFiletype:#先判断文件类行,都不是的话视为str
+                response = FileResponse(Bdata)
+                # response['Content-Type'] = myFiletype
+                # response['Content-Disposition'] = 'attachment;filename="example.tar.gz"'
+                return HttpResponse(Bdata, content_type=myFiletype)
+            else:
+                response = HttpResponse(Bdata)
+                return response
+
         return FileResponse()
 
 

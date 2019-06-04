@@ -116,6 +116,7 @@ table td,table th{
 {% block content %}
 <div>
     <!--选择文件-->
+
     <div class = "selectFile floatLeft">
         <select  name="fileType" id="ID_fileType">
             <option value="0">字符串</option>
@@ -248,15 +249,22 @@ $("#ID_decodeButton").on("click",function () {  //解码
         $.ajax({
                 url: "/tools/base64/",
                 type: "POST",
+                // processData:false,// tell jQuery not to process the data
+                // contentType:false,// tell jQuery not to set contentType
                 data: {
                     what: "decode",
+                    fileType:$("#ID_fileType").val(),
                     code:$("#ID_showCode").val(),
                     'csrfmiddlewaretoken':$("[name='csrfmiddlewaretoken']").val()
                 },
                 success: function (data) {
                     // console.log(data);
-                    var objFile=new File(data);
-                    console.log(objFile);
+                    // $('#ID_upFile_button')[0].files[0] = data;
+                    var obj =  $.parseJSON(data);
+                    if (obj['fileType'] == '0'){
+                        $('#ID_inputText').text(obj['data']);
+                    }
+
                 }
 
         })
