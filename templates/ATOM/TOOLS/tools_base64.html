@@ -264,6 +264,10 @@ $("#ID_decodeButton").on("click",function () {  //解码
                     if (obj['fileType'] == '0'){
                         $('#ID_inputText').text(obj['data']);
                     }
+                    else if(obj['fileType'] == '1'){
+                        var myImgSrc = obj['data'];
+                        $('#ID_showImageBox').attr('src',myImgSrc);
+                    }
 
                 }
 
