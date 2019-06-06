@@ -174,7 +174,7 @@ table td,table th{
                     <a id="ID_downloadFile_button" disabled="disabled" class="download_button CL_upImage" style="position:absolute;top: 25px;left: 0px;" >
                         <i class="fa fa-arrow-down" aria-hidden="true"></i> 下载文件
                     </a>
-                    <table style="position:absolute;top: 30px;left: 0px;" id="ID_fileTable" class="table table-hover">
+                    <table style="position:absolute;top: 60px;left: 0px;" id="ID_fileTable" class="table table-hover">
                         <!-- JS填充 -->
                     </table>
                 </div>
@@ -280,7 +280,7 @@ $("#ID_decodeButton").on("click",function () {  //解码
                     // $('#ID_upFile_button')[0].files[0] = data;
                     var obj =  $.parseJSON(data);
                     if(obj['state'] == 'true') {
-                         console.log('true');
+                         console.log(obj['fileName']);
                         if (obj['fileType'] == '0') {       //字符串
                             $('#ID_inputText').text(obj['data']);
                         }
@@ -288,8 +288,8 @@ $("#ID_decodeButton").on("click",function () {  //解码
                             var myImgSrc = obj['data'];
                             $('#ID_showImageBox').attr('src', myImgSrc);
                             switchButtonState($('#ID_downloadImage_button'),true);
-                            $('#ID_downloadFile_button').attr('href',myImgSrc);
-                            $('#ID_downloadFile_button').attr('download',obj['fileName']);
+                            $('#ID_downloadImage_button').attr('href',myImgSrc);
+                            $('#ID_downloadImage_button').attr('download',obj['fileName']);
                         }
                         else if (obj['fileType'] == '2') {  //文件
                             var myImgSrc = obj['data'];
