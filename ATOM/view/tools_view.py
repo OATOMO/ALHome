@@ -115,35 +115,55 @@ def base64_pro(request):
         return HttpResponse(strCode)
     elif whatType == "decode":  #解码
         whatfileType = request.POST.get("fileType")
-        if whatfileType == "0":         #解码字符串
+        # 解码字符串
+        if whatfileType == "0":
             code = request.POST.get("code")
             Bdata = base64.b64decode(code)
             code = Bdata.decode()  # 解码成UTF-8
             print(type(code))
-            return HttpResponse(json.dumps({"fileType": "0","data":code}, ensure_ascii=False))
+            return HttpResponse(json.dumps({"fileType": "0","state":"true","data":code}, ensure_ascii=False))
 
-
-        elif whatfileType == "1":       #解码图片
+        # 解码图片
+        elif whatfileType == "1":
+            print('decode 1')
             code = request.POST.get("code")
             Bdata = base64.b64decode(code)
-            # print(Bdata)
             # print(type(Bdata))
             myFiletype = checkFileType(Bdata)
             if "image" in myFiletype:#先判断文件类形,是否为图片
-                fileName = "static/img/tmp/base64_tmp." + myFiletype.split('/')[-1]
+                fileName = "static/tool/tmp/base64_tmp." + myFiletype.split('/')[-1]
                 print("fileName is -> " + fileName)
                 n = open(fileName, 'wb')
                 # for i in img.chunks():
                 n.write(Bdata)
                 n.close()
-                response = FileResponse(Bdata)
-
-                return HttpResponse(json.dumps({"fileType": "1","data":"/"+fileName}, ensure_ascii=False))
+                return HttpResponse(json.dumps({
+                    "fileType": "1","state":"true","data":"/"+fileName,
+                    "fileName":fileName.split('/')[-1]}, ensure_ascii=False))
             else:
-                response = HttpResponse(Bdata)
-                return response
+                return HttpResponse(json.dumps({
+                    "fileType": "1","state":"false","data":"false"}, ensure_ascii=False))
 
-        return FileResponse()
+        # 解码文件
+        elif whatfileType == "2":
+            print('decode 2')
+            code = request.POST.get("code")
+            Bdata = base64.b64decode(code)
+            # print(Bdata)
+            # print(type(Bdata))
+            myFiletype = checkFileType(Bdata)
+            if myFiletype:  #已知文件类型
+                fileName = "static/img/tmp/base64_tmp." + myFiletype.split('/')[-1]
+                n = open(fileName, 'wb')
+                n.write(Bdata)
+                n.close()
+                return HttpResponse(
+                    json.dumps({"fileType": "2", "state": "true", "data": "/" + fileName,
+                                "fileName":fileName.split('/')[-1]},ensure_ascii=False))
+            else:
+                return HttpResponse(
+                    json.dumps({"fileType": "2", "state": "false", "data": "false"}, ensure_ascii=False))
+        return HttpResponse()
 
 
 def checkFileType(Bdata):   #bug(无法处理文本文件)

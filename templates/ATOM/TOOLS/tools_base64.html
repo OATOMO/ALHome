@@ -101,6 +101,21 @@ button[disabled]{
   line-height: 20px;
 }
 
+.download_button[disabled]{
+  position: relative;
+  display: inline-block;
+  background: #7e7887;
+  border: 1px solid #CC99CC;
+  border-radius: 4px;
+  padding: 0px 12px;
+  /*margin-top: 5px;*/
+  overflow: hidden;
+  color: #ffffff;
+  text-decoration: none;
+  text-indent: 0;
+  line-height: 20px;
+}
+
 table{
   text-align: center;
   border: 1px solid #CC99CC;
@@ -145,16 +160,19 @@ table td,table th{
                     <a style="position:absolute;top: 0px;left: 0px;"  href="javascript:;" class="CL_upImage"><i class="fa fa-file-image-o" aria-hidden="true"></i> 上传图片
                         <input type="file" name="" id="ID_upImage_button">
                     </a>
-                    <button disabled="disabled" style="position:absolute;top: 25px;left: 0px;" disabled="disabled">
+                    <a id="ID_downloadImage_button" disabled="disabled" class="download_button CL_upImage" style="position:absolute;top: 25px;left: 0px;" >
                         <i class="fa fa-arrow-down" aria-hidden="true"></i> 下载图片
-                    </button>
+                    </a>
                     <img id="ID_showImageBox">
                 </div><div style="clear:both;"></div>
             </div>
             <div id="ID_subBox_file"  class="hidden">  <!--显示文件-->
                 <div class="selectFile_subBox" style="position:relative">
-                    <a style="position:absolute;top: 0px;left: 0px;" href="javascript:;" class="CL_upImage">上传文件
+                    <a style="position:absolute;top: 0px;left: 0px;" href="javascript:;" class="CL_upImage"> <i class="fa fa-file-archive-o" aria-hidden="true"></i> 上传文件
                         <input type="file" name="" id="ID_upFile_button">
+                    </a>
+                    <a id="ID_downloadFile_button" disabled="disabled" class="download_button CL_upImage" style="position:absolute;top: 25px;left: 0px;" >
+                        <i class="fa fa-arrow-down" aria-hidden="true"></i> 下载文件
                     </a>
                     <table style="position:absolute;top: 30px;left: 0px;" id="ID_fileTable" class="table table-hover">
                         <!-- JS填充 -->
@@ -261,14 +279,25 @@ $("#ID_decodeButton").on("click",function () {  //解码
                     // console.log(data);
                     // $('#ID_upFile_button')[0].files[0] = data;
                     var obj =  $.parseJSON(data);
-                    if (obj['fileType'] == '0'){
-                        $('#ID_inputText').text(obj['data']);
+                    if(obj['state'] == 'true') {
+                         console.log('true');
+                        if (obj['fileType'] == '0') {       //字符串
+                            $('#ID_inputText').text(obj['data']);
+                        }
+                        else if (obj['fileType'] == '1') { //图片
+                            var myImgSrc = obj['data'];
+                            $('#ID_showImageBox').attr('src', myImgSrc);
+                            switchButtonState($('#ID_downloadImage_button'),true);
+                            $('#ID_downloadFile_button').attr('href',myImgSrc);
+                            $('#ID_downloadFile_button').attr('download',obj['fileName']);
+                        }
+                        else if (obj['fileType'] == '2') {  //文件
+                            var myImgSrc = obj['data'];
+                            switchButtonState($('#ID_downloadFile_button'),true);
+                            $('#ID_downloadFile_button').attr('href',myImgSrc);
+                            $('#ID_downloadFile_button').attr('download',obj['fileName']);
+                        }
                     }
-                    else if(obj['fileType'] == '1'){
-                        var myImgSrc = obj['data'];
-                        $('#ID_showImageBox').attr('src',myImgSrc);
-                    }
-
                 }
 
         })
