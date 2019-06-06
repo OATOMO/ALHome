@@ -29,6 +29,10 @@ Tools_ID_list = {
     'base64':'ATOM/TOOLS/tools_base64.html/',
 }
 
+
+
+
+
 def ToolsStatisticsCount():
     toolList = Tools_ID_list.keys()
     x = toolList
@@ -43,24 +47,30 @@ def ToolsStatisticsCount():
         .add_yaxis('text',y)
         .set_global_opts(title_opts=opts.TitleOpts(title="Bar-基本示例", subtitle="我是副标题"))
     )
-    return c
-
-def toolsHome(request):
-    template = loader.get_template('ATOM/TOOLS/tools_home.html/')
-    myBar = ToolsStatisticsCount()
     context = dict(
-        myechart=myBar.render_embed()
+        ToolCount=c.render_embed()
         # host=REMOTE_HOST,#<-----修改为这个
         # script_list=l3d.get_js_dependencies()
     )
+    return context
+Tools_render_ID_list = {
+    'statistic':{'html':'ATOM/TOOLS/tools_statistic.html/','context': ToolsStatisticsCount()},
+}
 
-    return HttpResponse(template.render(context, request))
-    # return render(request, 'ATOM/TOOLS/tools_home.html/')
+
+def toolsHome(request):
+
+    return render(request, 'ATOM/TOOLS/tools_home.html/')
 
 def toolsID(request,IDName):
     # print('IDName is -> ' + IDName)
     if IDName in Tools_ID_list:
         retHtml = Tools_ID_list[IDName]
+    if IDName in Tools_render_ID_list:
+        retHtml = Tools_render_ID_list[IDName]['html']
+        context = Tools_render_ID_list[IDName]['context']()
+        template = loader.get_template(retHtml)
+        return HttpResponse(template.render(context, request))
     else :
         retHtml = 'ATOM/404.html/'
     return render(request,retHtml )
@@ -176,3 +186,7 @@ def checkFileType(Bdata):   #bug(无法处理文本文件)
     print('File MIME type: %s' % kind.mime)
     return kind.mime
 #-------------base64-----------------end
+#-------------Statistic--------------start
+# def Statistic_pro():
+
+#
