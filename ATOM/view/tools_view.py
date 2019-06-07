@@ -27,9 +27,8 @@ from example.commons import Faker
 
 Tools_ID_list = {
     'base64':'ATOM/TOOLS/tools_base64.html/',
+    'qrcode':'ATOM/TOOLS/tools_qrcode.html/',
 }
-
-
 
 
 
@@ -53,8 +52,9 @@ def ToolsStatisticsCount():
         # script_list=l3d.get_js_dependencies()
     )
     return context
+
 Tools_render_ID_list = {
-    'statistic':{'html':'ATOM/TOOLS/tools_statistic.html/','context': ToolsStatisticsCount()},
+    'statistic':{'html':'ATOM/TOOLS/tools_statistic.html/','context':ToolsStatisticsCount},
 }
 
 
@@ -66,7 +66,7 @@ def toolsID(request,IDName):
     # print('IDName is -> ' + IDName)
     if IDName in Tools_ID_list:
         retHtml = Tools_ID_list[IDName]
-    if IDName in Tools_render_ID_list:
+    elif IDName in Tools_render_ID_list:
         retHtml = Tools_render_ID_list[IDName]['html']
         context = Tools_render_ID_list[IDName]['context']()
         template = loader.get_template(retHtml)
@@ -189,4 +189,7 @@ def checkFileType(Bdata):   #bug(无法处理文本文件)
 #-------------Statistic--------------start
 # def Statistic_pro():
 
-#
+#-------------Statistic--------------end
+#-------------qrcode-----------------start
+# def qrcode_pro(request):
+#-------------qrcode-----------------start

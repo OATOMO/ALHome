@@ -1,0 +1,32 @@
+{% extends "ATOM/TOOLS/tools_base.html" %}
+{% block title %}Tools home{% endblock %}
+{% block headAppend %}
+<style>
+.CL_mainDiv{
+    margin: 50px auto;
+}
+
+#ID_textInput{
+    width: 400px;
+    height: 200px;
+    border: 2px #d36363 dashed;
+
+}
+.floatLeft{
+        float: left;
+    }
+.floatRight{
+    float: right;
+}
+
+</style>
+{% endblock %}
+{% block content %}
+<div class="CL_mainDiv">
+    <div>
+        <textarea class="floatLeft" id="ID_textInput" placeholder="请输入文字信息"></textarea>
+
+    </div>
+</div>
+
+{% endblock %}
