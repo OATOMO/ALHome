@@ -19,12 +19,38 @@
     float: right;
 }
 
+.CL_selectTab button{
+    float: left;
+    margin-right: 10px;
+    border: 2px #e67e22 dashed;
+    background-color: #9b59b6;
+    color: #ecf0f1;
+}
+
+.CL_selectTab button:hover{
+    border: 2px #e67e22 solid;
+    background-color: #e74c3c;
+
+}
+
+
 </style>
 {% endblock %}
 {% block content %}
 <div class="CL_mainDiv">
-    <div>
+    <!-- 选择由什么生成 二维码-->
+    <div class="CL_selectTab">
+        <button>文本</button>
+        <button>网址</button>
+        <button>图片</button>
+        <button>名片</button>
+    </div><div style="clear:both;"></div>
+    <div class="CL_myTab">
         <textarea class="floatLeft" id="ID_textInput" placeholder="请输入文字信息"></textarea>
+    </div>
+
+
+    <div>
 
     </div>
 </div>

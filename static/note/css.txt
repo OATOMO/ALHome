@@ -38,7 +38,7 @@
                 backgroung-color:red;
                 height: 100px;
             }
-            span div{   //(空格)关联选择器,选择所以<span>标签里的<div>标签(可以很多层,多种选择器类型混用)
+            span div{   //(空格)关联选择器,选择所有<span>标签里的<div>标签(可以很多层,多种选择器类型混用)
                 backgroung-color:red;
                 height: 100px;
             }
