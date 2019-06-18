@@ -1,58 +1,44 @@
 {% extends "ATOM/TOOLS/tools_base.html" %}
 {% block title %}Tools home{% endblock %}
 {% block headAppend %}
-<style>
-.CL_mainDiv{
-    margin: 50px auto;
-}
+<link rel="stylesheet" href="/static/tool/qrcode/qrcode.css">
 
-#ID_textInput{
-    width: 400px;
-    height: 200px;
-    border: 2px #d36363 dashed;
-
-}
-.floatLeft{
-        float: left;
-    }
-.floatRight{
-    float: right;
-}
-
-.CL_selectTab button{
-    float: left;
-    margin-right: 10px;
-    border: 2px #e67e22 dashed;
-    background-color: #9b59b6;
-    color: #ecf0f1;
-}
-
-.CL_selectTab button:hover{
-    border: 2px #e67e22 solid;
-    background-color: #e74c3c;
-
-}
-
-
-</style>
 {% endblock %}
 {% block content %}
 <div class="CL_mainDiv">
     <!-- 选择由什么生成 二维码-->
-    <div class="CL_selectTab">
-        <button>文本</button>
-        <button>网址</button>
-        <button>图片</button>
-        <button>名片</button>
-    </div><div style="clear:both;"></div>
-    <div class="CL_myTab">
-        <textarea class="floatLeft" id="ID_textInput" placeholder="请输入文字信息"></textarea>
+    <div class="CL_myTab floatLeft">
+        <!--<textarea class="floatLeft" id="ID_textInput" placeholder="请输入文字信息"></textarea>-->
+        <div class="wrap perspective">
+            <div class="cube">
+              <div class="cube1">
+
+              </div>
+              <div class="cube2">
+                  <textarea></textarea>
+                  <button class="createButton">生成</button>
+              </div>
+              <div class="cube3">
+
+              </div>
+            </div>
+        </div>
+    </div><!-- CL_myTab -->
+    <!-- 显示二维码 -->
+    <div class="qrcodeBox floatLeft">
+
+    </div><!--qrcodeBox-->
+    <!-- 选择生成方式 -->
+    <div class="CL_selectTab floatLeft " >
+        <button >网址</button>
+        <button >文本</button><!-- cube2 -->
+        <button >图片</button>
+        <button >名片</button>
     </div>
 
+</div><div style="clear:both;"></div>
 
-    <div>
-
-    </div>
-</div>
-
+{% endblock %}
+{% block script %}
+<script src="/static/tool/qrcode/qrcode.js"></script>
 {% endblock %}
