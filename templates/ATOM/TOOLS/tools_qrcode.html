@@ -2,7 +2,6 @@
 {% block title %}Tools home{% endblock %}
 {% block headAppend %}
 <link rel="stylesheet" href="/static/tool/qrcode/qrcode.css">
-
 {% endblock %}
 {% block content %}
 <div class="CL_mainDiv">
@@ -10,35 +9,41 @@
     <div class="CL_myTab floatLeft">
         <!--<textarea class="floatLeft" id="ID_textInput" placeholder="请输入文字信息"></textarea>-->
         <div class="wrap perspective">
+            <input type="radio" name="tabs" id="tab-top">
+            <input type="radio" name="tabs" id="tab-front">
+            <input type="radio" name="tabs" id="tab-bottom">
             <div class="cube">
               <div class="cube1">
-
               </div>
               <div class="cube2">
-                  <textarea></textarea>
-                  <button class="createButton">生成</button>
+                  <textarea id="ID_textCreateInput"></textarea>
+                  <button id="ID_textCreateBtn" class="createButton">生成</button>
               </div>
               <div class="cube3">
-
               </div>
             </div>
+
+
         </div>
     </div><!-- CL_myTab -->
     <!-- 显示二维码 -->
     <div class="qrcodeBox floatLeft">
-
+        <div  id="ID_test" class="CL_qrcodeShowBox">
+            <div id="ID_qrcodeShow"></div>
+            <!--<img id="ID_qrcodeShow">-->
+        </div>
     </div><!--qrcodeBox-->
     <!-- 选择生成方式 -->
     <div class="CL_selectTab floatLeft " >
-        <button >网址</button>
-        <button >文本</button><!-- cube2 -->
-        <button >图片</button>
-        <button >名片</button>
+        <label for="tab-top" onclick="cilckCreateType(1)">号码</label>
+        <label for="tab-front" >文本</label><!-- cube2 -->
+        <label for="tab-bottom" >名片</label>
     </div>
 
 </div><div style="clear:both;"></div>
 
 {% endblock %}
 {% block script %}
+<script src="/static/js/qrcodejs/qrcode.js"></script>
 <script src="/static/tool/qrcode/qrcode.js"></script>
 {% endblock %}

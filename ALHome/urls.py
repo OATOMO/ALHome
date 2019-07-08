@@ -48,6 +48,7 @@ urlpatterns = [
     path(r'ATOM/TOOLS/tools_home.html/',tools_view.toolsHome ),
     path(r'ATOM/TOOLS/tools_ID/<str:IDName>/',tools_view.toolsID ),
     path(r'tools/base64/', tools_view.base64_pro),
+    path(r'tools/qrcode/', tools_view.qrcode_pro),
 
 
 

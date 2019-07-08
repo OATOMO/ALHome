@@ -13,6 +13,7 @@
     margin-top: 10px;
 }
 
+
 .floatLeft{
         float: left;
     }
@@ -24,7 +25,7 @@
     float: right;
 }
 
-.CL_selectTab button{
+.CL_selectTab label{
     /*float: left;*/
     margin-right: 10px;
     border: 2px #e67e22 dashed;
@@ -33,7 +34,7 @@
     display: block;
 }
 
-.CL_selectTab button:hover{
+.CL_selectTab label:hover{
     border: 2px #e67e22 solid;
     background-color: #e74c3c;
 
@@ -60,6 +61,17 @@
     border: 2px #7596ff dashed;
 }
 
+.CL_qrcodeShowBox{
+    border: 1px #f06060 dashed;
+    width: 100%;
+    height: 200px;
+}
+
+#ID_qrcodeShow{
+    width: 100%;
+    height: auto;
+}
+
 .wrap{
   width: 100%;
   height: 300px;
@@ -73,7 +85,8 @@
   /*background: #123;*/
   margin: 0px auto;
   transform-style: preserve-3d;
-  transform-origin: 0 0 -150px;
+  transform-origin: 0 150px 0px;
+  /*transform-origin: 0 0 -150px;*/
   /*font-size: 40px;*/
   text-align: center;
   /*color: #fff;*/
@@ -134,3 +147,24 @@
     background: #3c3836;
 
 }
+
+#tab-top:checked ~ .cube {
+  -webkit-transform: rotateX(-90deg);
+          transform: rotateX(-90deg);
+}
+
+#tab-front:checked ~ .cube {
+  -webkit-transform: rotateX(0deg);
+          transform: rotateX(0deg);
+}
+
+#tab-bottom:checked ~ .cube {
+  -webkit-transform: rotateX(90deg);
+          transform: rotateX(90deg);
+}
+
+
+/*.cube:hover{*/
+    /*-webkit-transform: rotateX(-90deg);*/
+          /*transform: rotateX(-90deg);*/
+/*}*/

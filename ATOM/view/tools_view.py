@@ -18,6 +18,7 @@ import json
 import datetime
 import ast
 import base64
+import qrcode
 import io
 import filetype
 import math
@@ -191,5 +192,23 @@ def checkFileType(Bdata):   #bug(无法处理文本文件)
 
 #-------------Statistic--------------end
 #-------------qrcode-----------------start
-# def qrcode_pro(request):
+def qrcode_pro(request):
+    whatType = request.POST.get("what")
+
+    if whatType != 'qrcode':
+        return 'error'
+
+    createType = request.POST.get("createType")
+    if createType == 'text':
+        myText = request.POST.get('text')
+        print(myText)
+        img = qrcode.make(myText,error_correction=3)
+        fileName = "static/tool/tmp/qrcode_tmp.png"
+        with open(fileName, 'wb') as f:
+            img.save(f)
+        return HttpResponse(json.dumps({
+            "createType": "text", "state": "true", "path": "/" + fileName,
+            "fileName": fileName.split('/')[-1]}, ensure_ascii=False))
+        return
+
 #-------------qrcode-----------------start
