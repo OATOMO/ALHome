@@ -23,10 +23,21 @@
 //     }
 // })
 
+var dic = {'L':QRCode.CorrectLevel.L, 'M':QRCode.CorrectLevel.M,
+    'Q':QRCode.CorrectLevel.Q, 'H':QRCode.CorrectLevel.H};
+
 $("#ID_textCreateBtn").on("click",function () {
     // console.log($('#ID_textCreateInput').val());
     // console.log($('#ID_textCreateInput').val().length);
     // if (qrcode){qrcode.clear();}
+
+    var myCorrectLevel;
+    var myCorrectLevelKey = $('#ID_correctLevel').val();
+
+    if(myCorrectLevelKey in dic){
+        myCorrectLevel = dic[myCorrectLevelKey];
+    }
+
     $('#ID_qrcodeShow').empty();
     var qrcode = new QRCode('ID_qrcodeShow', {
       text: $('#ID_textCreateInput').val(),
@@ -34,7 +45,7 @@ $("#ID_textCreateBtn").on("click",function () {
       height: $('#ID_qrcodeShow').width(),
       colorDark : '#000000',
       colorLight : '#ffffff',
-      correctLevel : QRCode.CorrectLevel.H
+      correctLevel : myCorrectLevel
     });
     // qrcode.clear();
 

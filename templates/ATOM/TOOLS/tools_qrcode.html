@@ -9,11 +9,18 @@
     <div class="CL_myTab floatLeft">
         <!--<textarea class="floatLeft" id="ID_textInput" placeholder="请输入文字信息"></textarea>-->
         <div class="wrap perspective">
-            <input type="radio" name="tabs" id="tab-top">
-            <input type="radio" name="tabs" id="tab-front">
-            <input type="radio" name="tabs" id="tab-bottom">
+            <input type="radio" name="tabs" id="tab-top" style="display: none">
+            <input type="radio" name="tabs" id="tab-front" style="display: none">
+            <input type="radio" name="tabs" id="tab-bottom" style="display: none">
             <div class="cube">
               <div class="cube1">
+                  <div id="ID_cardCreateInputG"  >
+                      <input type="text" placeholder="名字">
+                      <input type="text" placeholder="First Name">
+                      <input type="text" placeholder="机构/组织">
+
+
+                  </div>
               </div>
               <div class="cube2">
                   <textarea id="ID_textCreateInput"></textarea>
@@ -31,6 +38,18 @@
         <div  id="ID_test" class="CL_qrcodeShowBox">
             <div id="ID_qrcodeShow"></div>
             <!--<img id="ID_qrcodeShow">-->
+        </div>
+        <div id="ID_qrcodeOpt">
+            <select id="ID_correctLevel">
+                <option value="L">L 7%</option>
+                <option value="M">M 15%</option>
+                <option value="Q">Q 25%</option>
+                <option value="H">H 30%</option>
+            </select>
+
+            <a id="ID_downloadImage_button" disabled="disabled" class="download_button CL_myButton" style="display: block;width: 60%;margin: 10px auto;" >
+                <i class="fa fa-arrow-down" aria-hidden="true"></i> 下载图片
+            </a>
         </div>
     </div><!--qrcodeBox-->
     <!-- 选择生成方式 -->

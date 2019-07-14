@@ -72,6 +72,47 @@
     height: auto;
 }
 
+.download_button[disabled]{
+  position: relative;
+  display: inline-block;
+  background: #7e7887;
+  border: 1px solid #CC99CC;
+  border-radius: 4px;
+  padding: 0px 12px;
+  /*margin-top: 5px;*/
+  overflow: hidden;
+  color: #ffffff;
+  text-decoration: none;
+  text-indent: 0;
+  line-height: 20px;
+}
+
+.CL_myButton {
+  position: relative;
+  display: inline-block;
+  background: #333333;
+  border: 1px solid #CC99CC;
+  border-radius: 4px;
+  padding: 0px 12px;
+  /*margin-top: 5px;*/
+  overflow: hidden;
+  color: #ffffff;
+  text-decoration: none;
+  text-indent: 0;
+  line-height: 20px;
+}
+
+.CL_myButton:hover {
+  background: #CC99CC;
+  border-color: #CC99CC;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+#ID_cardCreateInputG input{
+    display: block;
+}
+
 .wrap{
   width: 100%;
   height: 300px;
@@ -85,7 +126,7 @@
   /*background: #123;*/
   margin: 0px auto;
   transform-style: preserve-3d;
-  transform-origin: 0 150px 0px;
+  transform-origin: 0px 150px -150px;
   /*transform-origin: 0 0 -150px;*/
   /*font-size: 40px;*/
   text-align: center;
